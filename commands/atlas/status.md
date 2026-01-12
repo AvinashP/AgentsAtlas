@@ -1,3 +1,8 @@
+---
+description: Check project progress and suggest next action
+allowed-tools: Read, Bash(git log:*)
+---
+
 # Check Status
 
 Show current progress and suggest next action.

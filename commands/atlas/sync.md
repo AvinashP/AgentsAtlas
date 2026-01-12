@@ -1,3 +1,8 @@
+---
+description: Restore project context after /clear
+allowed-tools: Read
+---
+
 # Sync Context
 
 Refresh context after `/clear`. Use this to restore project awareness.

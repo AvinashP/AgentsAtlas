@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd frontmatter with allowed-tools to all commands\n\n- init.md: Read, Write, Edit, Bash(mkdir:*)\n- plan.md: Read, Write, Edit\n- execute.md: Task, Read, Write, Edit, Bash(git:*)\n- status.md: Read, Bash(git log:*)\n- sync.md: Read\n\nPrevents permission prompts and enables automation.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

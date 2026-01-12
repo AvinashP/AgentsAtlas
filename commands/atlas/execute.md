@@ -1,3 +1,8 @@
+---
+description: Execute current plan via subagent with fresh context
+allowed-tools: Task, Read, Write, Edit, Bash(git:*)
+---
+
 # Execute Plan
 
 Execute the current plan using a subagent for fresh context.

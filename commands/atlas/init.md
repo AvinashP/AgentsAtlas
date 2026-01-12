@@ -1,3 +1,8 @@
+---
+description: Initialize project with CLAUDE.md, STATE.md, and ROADMAP.md
+allowed-tools: Read, Write, Edit, Bash(mkdir:*)
+---
+
 # Initialize Project
 
 Initialize a new project with ClaudeAtlas workflow.

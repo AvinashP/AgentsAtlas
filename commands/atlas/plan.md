@@ -1,3 +1,8 @@
+---
+description: Create executable plan for current phase (3-5 tasks)
+allowed-tools: Read, Write, Edit
+---
+
 # Plan Phase
 
 Create an executable plan for the current phase.
