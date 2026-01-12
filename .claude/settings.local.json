@@ -11,7 +11,10 @@
       "Bash(cat:*)",
       "Bash(chmod:*)",
       "WebFetch(domain:github.com)",
-      "Bash(npx get-shit-done-cc:*)"
+      "Bash(npx get-shit-done-cc:*)",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(git stash:*)"
     ],
     "deny": [],
     "ask": []

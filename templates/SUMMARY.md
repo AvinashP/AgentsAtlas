@@ -14,8 +14,10 @@
 - `{{HASH}}` - {{COMMIT_MESSAGE}}
 
 ## Deviations
-{{AUTO_FIXES_OR_NONE}}
+None
+<!-- Or if deviations occurred:
 - {{WHAT_WAS_FOUND}} → {{HOW_IT_WAS_FIXED}}
+-->
 
 ---
 *Completed: {{TIMESTAMP}}*

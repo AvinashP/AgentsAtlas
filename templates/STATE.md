@@ -2,8 +2,9 @@
 
 ## Current Position
 - **Phase**: {{CURRENT_PHASE}} of {{TOTAL_PHASES}}
-- **Status**: {{not-started|in-progress|paused|blocked|complete}}
+- **Phase Status**: {{not-started|in-progress|complete}}
 - **Current Plan**: {{PLAN_FILE_OR_NONE}}
+- **Plan Status**: {{none|planned|executing|paused|complete}}
 
 ## Resume Point
 {{REMOVE_IF_NOT_PAUSED}}
