@@ -14,6 +14,12 @@
 ## Tech Stack
 {{LANGUAGE}} | {{FRAMEWORK}} | {{DATABASE}}
 
+## Codebase
+{{REMOVE_IF_GREENFIELD}}
+- `src/` - {{PURPOSE}}
+- `tests/` - {{TEST_FRAMEWORK}}
+- Entry: `{{ENTRY_POINT}}`
+
 ## Current State
 See [STATE.md](.planning/STATE.md) for current position and recent decisions.
 

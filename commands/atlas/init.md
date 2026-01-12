@@ -42,7 +42,24 @@ Files created:
 Next: Run /atlas:plan to create your first execution plan.
 ```
 
+## For Existing Codebases (Brownfield)
+
+If code already exists, briefly scan and note in CLAUDE.md:
+- Key directories (src/, lib/, tests/)
+- Entry points (main.ts, index.js, app.py)
+- Config files (package.json, tsconfig, .env.example)
+
+Don't create separate analysis docs—just add a "Codebase" section to CLAUDE.md:
+```markdown
+## Codebase
+- `src/` - Main application code
+- `src/api/` - REST endpoints
+- `tests/` - Jest test suite
+- Entry: `src/index.ts`
+```
+
+One paragraph. Not 7 documents.
+
 ## Rules
 - Don't over-ask. 4-5 questions max.
 - Don't create unnecessary files.
-- If brownfield (existing code), briefly note key files in CLAUDE.md.
