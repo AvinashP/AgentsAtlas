@@ -1,6 +1,6 @@
 ---
 description: Execute current plan via subagent with fresh context
-allowed-tools: Task, Read, Write, Edit, Bash(git:*)
+allowed-tools: Task, Read, Write, Edit, Bash(git:*), Bash(git init:*)
 ---
 
 # Execute Plan

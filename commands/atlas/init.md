@@ -1,6 +1,6 @@
 ---
 description: Initialize project with CLAUDE.md, STATE.md, and ROADMAP.md
-allowed-tools: Read, Write, Edit, Bash(mkdir:*)
+allowed-tools: Read, Write, Edit, Bash(mkdir:*), Bash(git init:*)
 ---
 
 # Initialize Project
@@ -9,28 +9,33 @@ Initialize a new project with ClaudeAtlas workflow.
 
 ## Process
 
-1. **Create .planning directory** if it doesn't exist
+1. **Check existing setup**:
+   - If `.git` doesn't exist, offer to run `git init`
+   - If CLAUDE.md exists, just append STATE.md reference (don't replace)
+   - If .planning/ exists, confirm before overwriting
 
-2. **Ask about the project**:
+2. **Create .planning directory** if it doesn't exist
+
+3. **Ask about the project**:
    - What are you building? (1 sentence)
    - What's the core value/problem it solves?
    - Tech stack (language, framework, database)?
    - Any key constraints? (timeline, dependencies, must-haves)
 
-3. **Create CLAUDE.md** in project root using the template:
-   - Keep it under 30 lines
-   - Focus on what matters for context
+4. **Create or update CLAUDE.md**:
+   - If CLAUDE.md exists: just add "## Current State" section with link to STATE.md
+   - If new: create using template, keep under 30 lines
 
-4. **Create .planning/STATE.md**:
+5. **Create .planning/STATE.md**:
    - Set Phase 1 of N (ask how many phases they envision)
    - Status: not-started
    - Next Action: "Run /atlas:plan to plan Phase 1"
 
-5. **Create .planning/ROADMAP.md**:
+6. **Create .planning/ROADMAP.md**:
    - List phases as checkboxes
    - Keep descriptions to 3-5 words each
 
-6. **Output**:
+7. **Output**:
 ```
 Project initialized.
 
