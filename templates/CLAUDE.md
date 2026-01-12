@@ -20,6 +20,10 @@
 - `tests/` - {{TEST_FRAMEWORK}}
 - Entry: `{{ENTRY_POINT}}`
 
+## Anti-patterns (avoid)
+- {{THING_CLAUDE_TENDS_TO_DO_WRONG}}
+- {{ANOTHER_PROJECT_SPECIFIC_DONT}}
+
 ## Current State
 See [STATE.md](.planning/STATE.md) for current position and recent decisions.
 
