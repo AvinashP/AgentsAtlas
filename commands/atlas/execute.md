@@ -28,9 +28,36 @@ Execute this plan. For each task:
 2. Run the verify step
 3. Make an atomic git commit: `feat({phase}): {task_name}`
 
+DEVIATION RULES (follow strictly):
+- AUTO-FIX: Bugs, broken imports, missing error handling → fix immediately, note in summary
+- AUTO-ADD: Security gaps, critical validation → add and note in summary
+- ASK FIRST: Schema changes, new dependencies, architecture changes → stop and ask user
+- LOG TO STATE.md: Refactoring ideas, nice-to-haves → add to "Deferred Issues" section
+
 After ALL tasks complete:
-- Update .planning/STATE.md with completion status
-- Create brief summary (5-10 lines) of what was built
+1. Create SUMMARY.md at `.planning/phases/{NN}-SUMMARY.md`:
+   ```markdown
+   # Phase {N}: {Name} - Summary
+
+   ## Shipped
+   - {substantive description of what was built}
+   - {another deliverable}
+
+   ## Files Changed
+   - {file1.ts} - {what changed}
+   - {file2.ts} - {what changed}
+
+   ## Commits
+   - {hash} - {message}
+
+   ## Deviations
+   - {any auto-fixes or auto-adds, or "None"}
+   ```
+
+2. Update .planning/STATE.md:
+   - Set Status to "complete" for this plan
+   - Clear Resume Point section
+   - Add any deferred issues to Deferred Issues section
 
 Plan:
 {PLAN_CONTENT}
@@ -62,12 +89,16 @@ Next: Run /atlas:status to see what's next.
 ## Why Subagent?
 Fresh 200k token context = no degradation. The subagent starts clean, executes with full attention, and returns results. Main context stays lean.
 
-## Deviation Rules
-The subagent should:
-- **Auto-fix**: Bugs, missing error handling, broken imports
-- **Auto-add**: Critical validation, security checks
-- **Ask first**: Schema changes, new dependencies, architectural changes
-- **Log for later**: Refactoring ideas, performance improvements, nice-to-haves
+## Deviation Rules (Formalized)
+
+| Type | Action | Example |
+|------|--------|---------|
+| **Auto-fix** | Fix immediately, note in SUMMARY.md | Bugs, broken imports, missing error handling |
+| **Auto-add** | Add and note in SUMMARY.md | Security gaps, critical validation |
+| **Ask first** | Stop execution, ask user | Schema changes, new dependencies, architecture |
+| **Log for later** | Add to STATE.md Deferred Issues | Refactoring ideas, nice-to-haves, performance |
+
+This prevents scope creep while ensuring critical issues are addressed.
 
 ## On Failure
 If a task fails:

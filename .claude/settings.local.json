@@ -9,7 +9,9 @@
       "Bash(git commit -m \"$(cat <<''EOF''\nAdd anti-patterns section to CLAUDE.md template\n\nProject-specific guardrails to prevent Claude from repeating\nunwanted patterns (e.g., over-engineering, wrong style conventions).\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git commit:*)",
       "Bash(cat:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(npx get-shit-done-cc:*)"
     ],
     "deny": [],
     "ask": []
