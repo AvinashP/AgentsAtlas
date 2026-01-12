@@ -4,7 +4,7 @@ A minimal, effective workflow for building production-ready projects with Claude
 
 ## Philosophy
 
-- **4 commands** instead of 22
+- **5 commands** instead of 22
 - **Fresh context** via subagent execution (no degradation)
 - **XML task format** with verification steps
 - **3-5 tasks per plan** (quality over quantity)
@@ -22,25 +22,31 @@ A minimal, effective workflow for building production-ready projects with Claude
 
 ## Installation
 
-### Option 1: Symlink (Recommended)
+### Option 1: npx (Recommended)
 
 ```bash
-# Link commands to your global Claude config
-ln -s /path/to/ClaudeAtlas/commands/atlas ~/.claude/commands/atlas
+# Install globally (available in all projects)
+npx claude-atlas --global
+
+# Or install locally (current project only)
+npx claude-atlas --local
 ```
 
-### Option 2: Copy to Project
+### Option 2: From GitHub
 
 ```bash
-# Copy to a specific project
-cp -r /path/to/ClaudeAtlas/commands/atlas your-project/.claude/commands/
+# Clone and run installer
+git clone https://github.com/AvinashP/ClaudeAtlas.git
+cd ClaudeAtlas
+node bin/install.js --global
 ```
 
-### Option 3: Global Install
+### Option 3: Manual Symlink
 
 ```bash
-# Copy to global Claude commands
-cp -r /path/to/ClaudeAtlas/commands/atlas ~/.claude/commands/
+# Clone and symlink
+git clone https://github.com/AvinashP/ClaudeAtlas.git
+ln -s $(pwd)/ClaudeAtlas/commands/atlas ~/.claude/commands/atlas
 ```
 
 ## Project Structure
