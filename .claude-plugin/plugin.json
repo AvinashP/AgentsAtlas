@@ -1,0 +1,17 @@
+{
+  "name": "claude-atlas",
+  "version": "1.0.0",
+  "description": "Minimal workflow for Claude Code - 5 commands, fresh context, quality execution",
+  "author": {
+    "name": "AvinashP"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/AvinashP/ClaudeAtlas",
+  "commands": [
+    "./commands/atlas/init.md",
+    "./commands/atlas/plan.md",
+    "./commands/atlas/execute.md",
+    "./commands/atlas/status.md",
+    "./commands/atlas/sync.md"
+  ]
+}

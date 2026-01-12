@@ -1,0 +1,29 @@
+{
+  "name": "claude-atlas",
+  "version": "1.0.0",
+  "description": "Minimal workflow for Claude Code - 5 commands, fresh context, quality execution",
+  "bin": {
+    "claude-atlas": "bin/install.js"
+  },
+  "files": [
+    "bin",
+    "commands",
+    "templates"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "workflow",
+    "ai",
+    "productivity"
+  ],
+  "author": "AvinashP",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AvinashP/ClaudeAtlas.git"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

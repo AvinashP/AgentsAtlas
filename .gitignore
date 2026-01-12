@@ -9,3 +9,7 @@
 
 # Test projects
 test-project/
+
+# Node
+node_modules/
+package-lock.json

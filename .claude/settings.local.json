@@ -7,7 +7,9 @@
       "Bash(git commit -m \"$(cat <<''EOF''\nAdd frontmatter with allowed-tools to all commands\n\n- init.md: Read, Write, Edit, Bash(mkdir:*)\n- plan.md: Read, Write, Edit\n- execute.md: Task, Read, Write, Edit, Bash(git:*)\n- status.md: Read, Bash(git log:*)\n- sync.md: Read\n\nPrevents permission prompts and enables automation.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git commit -m \"$(cat <<''EOF''\nAdd lightweight brownfield support to init\n\n- Add \"For Existing Codebases\" section to init.md\n- Add optional Codebase section to CLAUDE.md template\n- One paragraph in CLAUDE.md, not 7 separate docs\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git commit -m \"$(cat <<''EOF''\nAdd anti-patterns section to CLAUDE.md template\n\nProject-specific guardrails to prevent Claude from repeating\nunwanted patterns (e.g., over-engineering, wrong style conventions).\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(cat:*)",
+      "Bash(chmod:*)"
     ],
     "deny": [],
     "ask": []

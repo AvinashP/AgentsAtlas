@@ -1,0 +1,17 @@
+{
+  "name": "claude-atlas",
+  "owner": {
+    "name": "AvinashP"
+  },
+  "plugins": [
+    {
+      "name": "claude-atlas",
+      "description": "Minimal workflow for Claude Code - 5 commands, fresh context, quality execution",
+      "author": {
+        "name": "AvinashP"
+      },
+      "version": "1.0.0",
+      "source": "./"
+    }
+  ]
+}
