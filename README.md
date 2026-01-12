@@ -4,7 +4,7 @@ A minimal, effective workflow for building production-ready projects with Claude
 
 ## Philosophy
 
-- **5 commands** instead of 22
+- **5 commands** to manage any project
 - **Fresh context** via subagent execution (no degradation)
 - **XML task format** with verification steps
 - **3-5 tasks per plan** (quality over quantity)
