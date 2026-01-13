@@ -2,6 +2,9 @@
 
 A minimal, effective workflow for building production-ready projects with Claude Code.
 
+<img width="476" height="302" alt="ClaudeAtlas" src="https://github.com/user-attachments/assets/c0936781-d5f4-403b-91ce-7d1328945265" />
+
+
 ## Philosophy
 
 - **5 commands** to manage any project
