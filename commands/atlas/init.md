@@ -1,6 +1,6 @@
 ---
 description: Initialize project with CLAUDE.md, STATE.md, and ROADMAP.md
-allowed-tools: Read, Write, Edit, Glob, Bash(mkdir:*), Bash(git init:*), Bash(ls:*)
+allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(mkdir:*), Bash(git init:*), Bash(ls:*)
 ---
 
 # Initialize Project
@@ -16,11 +16,13 @@ Initialize a new project with ClaudeAtlas workflow.
 
 2. **Create .planning directory** if it doesn't exist
 
-3. **Ask about the project**:
-   - What are you building? (1 sentence)
-   - What's the core value/problem it solves?
-   - Tech stack (language, framework, database)?
-   - Any key constraints? (timeline, dependencies, must-haves)
+3. **Ask about the project** using AskUserQuestion tool:
+   Use a single AskUserQuestion call with these questions:
+   - "What are you building?" (free text - 1 sentence description)
+   - "What's the tech stack?" (options: detect from codebase if brownfield, or ask)
+   - "How many phases do you envision?" (options: 2-3, 4-5, 6+)
+
+   For brownfield projects, pre-fill detected info and ask for confirmation.
 
 4. **Create or update CLAUDE.md**:
    - If CLAUDE.md exists: just add "## Current State" section with link to STATE.md

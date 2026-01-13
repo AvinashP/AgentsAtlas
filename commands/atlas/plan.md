@@ -1,6 +1,6 @@
 ---
 description: Create executable plan for current phase (3-5 tasks)
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash(ls:*)
+allowed-tools: Read, Write, Edit, Glob, Grep, AskUserQuestion, Bash(ls:*)
 ---
 
 # Plan Phase
@@ -21,10 +21,10 @@ Create an executable plan for the current phase.
 
 2. **Identify current phase** from STATE.md
 
-3. **Ask clarifying questions** (2-3 max):
-   - What specifically should this phase accomplish?
-   - Any preferences on approach?
-   - Skip if the phase is obvious from roadmap
+3. **Ask clarifying questions** using AskUserQuestion tool (if needed):
+   - Only ask if the phase goal is unclear from ROADMAP.md
+   - Use AskUserQuestion with options when possible (e.g., approach preferences)
+   - Skip entirely if the phase is obvious from roadmap context
 
 4. **Create PLAN.md** in `.planning/phases/`:
    - File: `.planning/phases/{NN}-PLAN.md` (e.g., `01-PLAN.md`)
