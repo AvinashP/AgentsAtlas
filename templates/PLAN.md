@@ -18,9 +18,8 @@
 <action>
 {{SPECIFIC_IMPLEMENTATION_STEPS}}
 </action>
-<verify>
-{{HOW_TO_VERIFY_THIS_WORKS}}
-</verify>
+<verify>{{HOW_TO_TEST}}</verify>
+<done>{{ACCEPTANCE_CRITERIA}}</done>
 </task>
 
 <task id="2">
@@ -29,9 +28,8 @@
 <action>
 {{SPECIFIC_IMPLEMENTATION_STEPS}}
 </action>
-<verify>
-{{HOW_TO_VERIFY_THIS_WORKS}}
-</verify>
+<verify>{{HOW_TO_TEST}}</verify>
+<done>{{ACCEPTANCE_CRITERIA}}</done>
 </task>
 
 <task id="3">
@@ -40,9 +38,8 @@
 <action>
 {{SPECIFIC_IMPLEMENTATION_STEPS}}
 </action>
-<verify>
-{{HOW_TO_VERIFY_THIS_WORKS}}
-</verify>
+<verify>{{HOW_TO_TEST}}</verify>
+<done>{{ACCEPTANCE_CRITERIA}}</done>
 </task>
 
 ---

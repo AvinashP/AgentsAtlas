@@ -105,13 +105,13 @@ Plans use XML for clarity:
 3. Generate JWT token on success
 4. Return token with 24h expiry
 </action>
-<verify>
-- curl POST /api/auth/login returns 200 + token
-- Invalid credentials return 401
-- Token decodes correctly
-</verify>
+<verify>curl -X POST /api/auth/login -d '{"email":"test@example.com","password":"test"}'</verify>
+<done>Login returns 200 + JWT token; invalid credentials return 401</done>
 </task>
 ```
+
+- `verify` = How to test (commands to run)
+- `done` = Acceptance criteria (what success looks like)
 
 ## Why This Works
 

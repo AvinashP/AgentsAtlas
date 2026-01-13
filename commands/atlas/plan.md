@@ -30,7 +30,7 @@ Create an executable plan for the current phase.
    - File: `.planning/phases/{NN}-PLAN.md` (e.g., `01-PLAN.md`)
    - Use XML task format
    - **Maximum 3-5 tasks** (this is critical for quality)
-   - Each task must have: name, files, action, verify
+   - Each task must have: name, files, action, verify, done
 
 5. **Task format**:
 ```xml
@@ -43,13 +43,14 @@ Specific implementation steps:
 2. Do Y
 3. Do Z
 </action>
-<verify>
-How to confirm this works:
-- Run: npm test
-- Check: endpoint returns 200
-</verify>
+<verify>npm test && curl -X POST /api/auth/login</verify>
+<done>Login endpoint accepts email/password, returns JWT token</done>
 </task>
 ```
+
+**Field distinction**:
+- `verify` = How to test (commands, checks to run)
+- `done` = What success looks like (acceptance criteria)
 
 6. **Update STATE.md**:
    - Current Plan: `{NN}-PLAN.md`
@@ -71,4 +72,4 @@ Next: Run /atlas:execute to implement this plan.
 - **3-5 tasks maximum**. If you need more, the phase is too big—split it.
 - Tasks should be 15-45 min of implementation each.
 - Be specific in actions. "Implement auth" is too vague. "Create login endpoint with JWT token generation" is right.
-- Every task needs a verify step.
+- Every task needs both `verify` (how to test) and `done` (acceptance criteria).
