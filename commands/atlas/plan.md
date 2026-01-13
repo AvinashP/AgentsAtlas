@@ -1,6 +1,6 @@
 ---
 description: Create executable plan for current phase (3-5 tasks)
-allowed-tools: Read, Write, Edit, Glob, Grep
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash(ls:*)
 ---
 
 # Plan Phase

@@ -1,6 +1,6 @@
 ---
 description: Check project progress and suggest next action
-allowed-tools: Read, Bash(git log:*)
+allowed-tools: Read, Glob, Bash(git log:*), Bash(git status:*)
 ---
 
 # Check Status

@@ -1,6 +1,6 @@
 ---
 description: Restore project context after /clear
-allowed-tools: Read
+allowed-tools: Read, Glob
 ---
 
 # Sync Context
