@@ -57,11 +57,39 @@ Pull issues from external sources and triage them for planning.
 
 ## Sentry Integration
 
-If user provides Sentry project:
-1. Ask for auth token (or check environment variable `SENTRY_AUTH_TOKEN`)
-2. Fetch recent issues: `GET /api/0/projects/{org}/{project}/issues/`
+### Parameters
+When Sentry is selected, ask using AskUserQuestion:
+
+1. **Version** (optional):
+   - Options: "All versions", "Latest release", "Specific version (enter)"
+   - Default: Ask user
+   - Maps to Sentry query: `release:{version}`
+
+2. **Duration**:
+   - Options: "Last 24 hours", "Last 7 days", "Last 30 days"
+   - Default: "Last 24 hours"
+   - Maps to Sentry query: `firstSeen:-24h` / `-7d` / `-30d`
+
+### Fetch Process
+1. Check for `SENTRY_AUTH_TOKEN` environment variable (or ask user)
+2. Fetch issues with filters:
+   ```
+   GET /api/0/projects/{org}/{project}/issues/
+   ?query=is:unresolved release:{version}
+   &statsPeriod={duration}
+   &sort=freq
+   ```
 3. Sort by frequency/users affected
 4. Present top 10-20 for triage
+
+### Example Output
+```
+Sentry Issues (v2.3.1, last 24h):
+| # | Issue | Events | Users | First Seen |
+|---|-------|--------|-------|------------|
+| 1 | NullRef in UserService | 234 | 89 | 2h ago |
+| 2 | Auth timeout on mobile | 45 | 23 | 6h ago |
+```
 
 ## GitHub Integration
 
