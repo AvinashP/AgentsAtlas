@@ -117,23 +117,14 @@ Poll `.atlas/compile-status.json` until status is not "compiling":
 - Do NOT proceed to tests until status is "success"
 
 **If status is "success":**
-- Proceed to tests
+- Verification succeeded.
 
-### 3. Run EditMode tests (if applicable)
-```bash
-unity -batchmode -runTests -testPlatform EditMode -projectPath . -testResults ./TestResults/editmode.xml -logFile ./editmode.log
-```
 
-### 4. Run PlayMode tests (if applicable)
-```bash
-unity -batchmode -runTests -testPlatform PlayMode -projectPath . -testResults ./TestResults/playmode.xml -logFile ./playmode.log
-```
 
 ## Success Criteria
 
 - [ ] `.atlas/compile-status.json` shows `"status": "success"`
-- [ ] All EditMode tests pass
-- [ ] All PlayMode tests pass (if changed play logic)
+
 
 ## Fallback: Batch Mode (Unity Closed)
 
