@@ -37,7 +37,19 @@ Initialize a new project with ClaudeAtlas workflow.
    - List phases as checkboxes
    - Keep descriptions to 3-5 words each
 
-7. **Output**:
+7. **Offer verify hook** (optional):
+   Detect project type and offer to create `.atlas/verify.md`:
+   - Unity project (Assets/ folder) → Unity verification template
+   - Node project (package.json) → Node/fullstack verification template
+   - Python project (requirements.txt, pyproject.toml) → Python verification template
+   - Otherwise → Skip or offer generic template
+
+   Use AskUserQuestion: "Create custom verification workflow?"
+   - Yes, use detected template
+   - Yes, create empty template
+   - No, use inline verify commands
+
+8. **Output**:
 ```
 Project initialized.
 
@@ -45,6 +57,7 @@ Files created:
 - CLAUDE.md (project context)
 - .planning/STATE.md (current state)
 - .planning/ROADMAP.md (phase overview)
+- .atlas/verify.md (optional - custom verification)
 
 Next: Run /atlas:plan to create your first execution plan.
 ```

@@ -25,8 +25,17 @@ Execute the current plan using a subagent for fresh context.
 ```
 Execute this plan. For each task:
 1. Implement the action steps
-2. Run the verify step
+2. Run verification (see VERIFICATION below)
 3. Make an atomic git commit: `feat({phase}): {task_name}`
+
+VERIFICATION:
+- First, check if `.atlas/verify.md` exists
+- If YES: Spawn a verify subagent with:
+  - Task name and files changed
+  - The <verify> hint from the task
+  - Full .atlas/verify.md instructions
+  - Only proceed if verify subagent reports success
+- If NO: Run the <verify> command directly
 
 DEVIATION RULES (follow strictly):
 - AUTO-FIX: Bugs, broken imports, missing error handling → fix immediately, note in summary
@@ -99,6 +108,38 @@ Fresh 200k token context = no degradation. The subagent starts clean, executes w
 | **Log for later** | Add to STATE.md Deferred Issues | Refactoring ideas, nice-to-haves, performance |
 
 This prevents scope creep while ensuring critical issues are addressed.
+
+## Verify Hooks
+
+Projects can define custom verification by creating `.atlas/verify.md`:
+
+```
+your-project/
+├── .atlas/
+│   └── verify.md    # Custom verification workflow
+├── CLAUDE.md
+└── .planning/
+```
+
+When `.atlas/verify.md` exists, execute spawns a dedicated verify subagent after each task implementation. This allows project-specific verification (Unity tests, E2E tests, etc.) without changing the core workflow.
+
+**Example Unity verify.md:**
+```markdown
+# Unity Verification
+1. Run EditMode tests: `unity -batchmode -runTests -testPlatform EditMode`
+2. Run PlayMode tests: `unity -batchmode -runTests -testPlatform PlayMode`
+3. Check Unity.log for compile errors
+```
+
+**Example Full-Stack verify.md:**
+```markdown
+# Full-Stack Verification
+1. Type check: `npm run typecheck`
+2. Unit tests: `npm test`
+3. Build: `npm run build`
+```
+
+If no `.atlas/verify.md` exists, falls back to running `<verify>` command directly.
 
 ## On Failure
 If a task fails:
