@@ -19,7 +19,7 @@ using System.Collections.Generic;
 public static class AtlasCompileHelper
 {
     private static readonly string StatusFile = ".atlas/compile-status.json";
-    private static bool isCompiling = false;
+    private static List<string> errors = new List<string>();
 
     static AtlasCompileHelper()
     {
@@ -28,11 +28,8 @@ public static class AtlasCompileHelper
         CompilationPipeline.assemblyCompilationFinished += OnAssemblyCompilationFinished;
     }
 
-    private static List<string> errors = new List<string>();
-
     private static void OnCompilationStarted(object context)
     {
-        isCompiling = true;
         errors.Clear();
         WriteStatus("compiling", null);
     }
@@ -50,7 +47,6 @@ public static class AtlasCompileHelper
 
     private static void OnCompilationFinished(object context)
     {
-        isCompiling = false;
         if (errors.Count > 0)
         {
             WriteStatus("error", errors.ToArray());
