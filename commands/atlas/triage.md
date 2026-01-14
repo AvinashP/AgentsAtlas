@@ -7,6 +7,24 @@ allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, WebFetch, Bash(curl:*),
 
 Pull issues from external sources and triage them for planning.
 
+## Credentials
+
+All integrations read credentials from `.env` file in project root:
+
+```bash
+# .env (add to .gitignore!)
+JIRA_URL=https://yourcompany.atlassian.net
+JIRA_EMAIL=you@company.com
+JIRA_API_TOKEN=your-jira-api-token
+
+SENTRY_URL=https://sentry.io
+SENTRY_ORG=your-org
+SENTRY_PROJECT=your-project
+SENTRY_AUTH_TOKEN=your-sentry-token
+```
+
+**First run**: If `.env` doesn't exist or is missing required values, ask user and offer to create/update `.env` file.
+
 ## Process
 
 1. **Ask for source** using AskUserQuestion:
@@ -73,8 +91,9 @@ When Sentry is selected, ask using AskUserQuestion:
    - Maps to Sentry query: `firstSeen:-24h` / `-7d` / `-30d`
 
 ### Fetch Process
-1. Check for `SENTRY_AUTH_TOKEN` environment variable (or ask user)
-2. Fetch issues with filters:
+1. Read `.env` file for `SENTRY_URL`, `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN`
+2. If missing, ask user and offer to save to `.env`
+3. Fetch issues with filters:
    ```
    GET /api/0/projects/{org}/{project}/issues/
    ?query=is:unresolved release:{version}
@@ -111,10 +130,12 @@ When JIRA is selected, ask using AskUserQuestion:
    - Default: "To Do only"
 
 ### Auth
-Check environment variables (or ask user):
+Read from `.env` file:
 - `JIRA_URL` - Your JIRA instance (e.g., `https://company.atlassian.net`)
 - `JIRA_EMAIL` - Your JIRA email
 - `JIRA_API_TOKEN` - API token from https://id.atlassian.com/manage/api-tokens
+
+If missing, ask user and offer to save to `.env`.
 
 ### Fetch Process
 ```bash
