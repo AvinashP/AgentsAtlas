@@ -2,47 +2,151 @@
 
 Custom verification workflow for Unity projects.
 
+## Setup (One-Time)
+
+Add the Atlas compile helper script to your Unity project:
+
+**Create `Assets/Editor/AtlasCompileHelper.cs`:**
+```csharp
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.Compilation;
+using UnityEngine;
+using System.IO;
+using System.Collections.Generic;
+
+[InitializeOnLoad]
+public static class AtlasCompileHelper
+{
+    private static readonly string StatusFile = ".atlas/compile-status.json";
+    private static bool isCompiling = false;
+
+    static AtlasCompileHelper()
+    {
+        CompilationPipeline.compilationStarted += OnCompilationStarted;
+        CompilationPipeline.compilationFinished += OnCompilationFinished;
+        CompilationPipeline.assemblyCompilationFinished += OnAssemblyCompilationFinished;
+    }
+
+    private static List<string> errors = new List<string>();
+
+    private static void OnCompilationStarted(object context)
+    {
+        isCompiling = true;
+        errors.Clear();
+        WriteStatus("compiling", null);
+    }
+
+    private static void OnAssemblyCompilationFinished(string assembly, CompilerMessage[] messages)
+    {
+        foreach (var msg in messages)
+        {
+            if (msg.type == CompilerMessageType.Error)
+            {
+                errors.Add($"{msg.file}({msg.line}): {msg.message}");
+            }
+        }
+    }
+
+    private static void OnCompilationFinished(object context)
+    {
+        isCompiling = false;
+        if (errors.Count > 0)
+        {
+            WriteStatus("error", errors.ToArray());
+        }
+        else
+        {
+            WriteStatus("success", null);
+        }
+    }
+
+    private static void WriteStatus(string status, string[] errorList)
+    {
+        var dir = Path.GetDirectoryName(StatusFile);
+        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+
+        var json = $@"{{
+  ""status"": ""{status}"",
+  ""timestamp"": ""{System.DateTime.Now:O}"",
+  ""errors"": {(errorList == null ? "[]" : "[\"" + string.Join("\",\"", errorList) + "\"]")}
+}}";
+        File.WriteAllText(StatusFile, json);
+    }
+
+    [MenuItem("Atlas/Trigger Compile Check")]
+    public static void TriggerCompileCheck()
+    {
+        errors.Clear();
+        WriteStatus("compiling", null);
+        AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+    }
+}
+#endif
+```
+
 ## Process
 
 For each task verification:
 
-### 1. Compile Check (Required - Always First)
+### 1. Trigger Compilation (Unity Editor Open)
 
-Open Unity in batch mode to trigger compilation:
+**Option A: Via Menu**
+- Unity Menu → Atlas → Trigger Compile Check
+
+**Option B: Via Command Line (connects to open Editor)**
 ```bash
-unity -batchmode -projectPath . -logFile ./compile.log -quit
+unity -projectPath . -executeMethod AtlasCompileHelper.TriggerCompileCheck -quit
 ```
 
-Then check `compile.log` for errors:
-- Search for `error CS` (C# compiler errors)
-- Search for `CompilerError`
-- Search for `Cannot build player`
+**Option C: Touch a file to trigger auto-refresh**
+Unity auto-compiles when any .cs file changes. The helper script captures the result.
 
-**If compile errors found:**
-- Report the specific errors to user
-- List file and line number from log
-- Do NOT proceed to tests until compile errors are fixed
-- Suggest fixes if obvious (missing using, typo, etc.)
+### 2. Wait and Check Status
 
-### 2. Run EditMode tests (if applicable)
+Poll `.atlas/compile-status.json` until status is not "compiling":
+```json
+{
+  "status": "success",  // or "error" or "compiling"
+  "timestamp": "2024-01-15T10:30:00",
+  "errors": []
+}
+```
+
+**If status is "error":**
+- Read the errors array
+- Report each error with file and line number
+- Attempt to fix if obvious (missing using, typo, etc.)
+- Re-trigger compilation after fix
+- Do NOT proceed to tests until status is "success"
+
+**If status is "success":**
+- Proceed to tests
+
+### 3. Run EditMode tests (if applicable)
 ```bash
 unity -batchmode -runTests -testPlatform EditMode -projectPath . -testResults ./TestResults/editmode.xml -logFile ./editmode.log
 ```
 
-Check `editmode.log` and `TestResults/editmode.xml` for failures.
-
-### 3. Run PlayMode tests (if applicable)
+### 4. Run PlayMode tests (if applicable)
 ```bash
 unity -batchmode -runTests -testPlatform PlayMode -projectPath . -testResults ./TestResults/playmode.xml -logFile ./playmode.log
 ```
 
-Check `playmode.log` and `TestResults/playmode.xml` for failures.
-
 ## Success Criteria
 
-- [ ] No compile errors in compile.log
+- [ ] `.atlas/compile-status.json` shows `"status": "success"`
 - [ ] All EditMode tests pass
 - [ ] All PlayMode tests pass (if changed play logic)
+
+## Fallback: Batch Mode (Unity Closed)
+
+If Unity Editor is not open, use batch mode:
+```bash
+unity -batchmode -projectPath . -logFile ./compile.log -quit
+```
+
+Then check `compile.log` for `error CS` patterns.
 
 ## Error Patterns to Detect
 
@@ -51,7 +155,6 @@ error CS0103: The name 'X' does not exist
 error CS0246: The type or namespace 'X' could not be found
 error CS1061: 'X' does not contain a definition for 'Y'
 error CS0029: Cannot implicitly convert type 'X' to 'Y'
-CompilerError: ...
 ```
 
 ## When to Skip Tests (but never skip compile check)
@@ -64,5 +167,3 @@ CompilerError: ...
 
 The `<verify>` field from the task provides context on what specifically to verify.
 Use it to scope the verification appropriately.
-
-**Note:** Unity must be closed before running batch mode commands, or use a separate Unity installation path.
