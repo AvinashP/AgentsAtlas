@@ -105,6 +105,18 @@ function install(isGlobal) {
   copyDir(atlasSrc, atlasDest);
   console.log(`  ${green}✓${reset} Installed commands/atlas`);
 
+  // Copy templates
+  const templatesSrc = path.join(src, 'templates');
+  const templatesDest = path.join(claudeDir, 'atlas-templates');
+
+  // Remove existing if present
+  if (fs.existsSync(templatesDest)) {
+    fs.rmSync(templatesDest, { recursive: true });
+  }
+
+  copyDir(templatesSrc, templatesDest);
+  console.log(`  ${green}✓${reset} Installed atlas-templates`);
+
   console.log(`
   ${green}Done!${reset}
 
@@ -114,6 +126,10 @@ function install(isGlobal) {
     /atlas:execute  Execute with fresh context
     /atlas:status   Check progress
     /atlas:sync     Restore context after /clear
+    /atlas:triage   Pull issues from Sentry/JIRA/GitHub
+
+  ${yellow}Templates installed to:${reset}
+    ${locationLabel}/atlas-templates/
 `);
 }
 

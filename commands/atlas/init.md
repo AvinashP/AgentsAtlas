@@ -1,6 +1,6 @@
 ---
 description: Initialize project with CLAUDE.md, STATE.md, and ROADMAP.md
-allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(mkdir:*), Bash(git init:*), Bash(ls:*)
+allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(mkdir:*), Bash(git init:*), Bash(ls:*), Bash(cp:*)
 ---
 
 # Initialize Project
@@ -39,15 +39,17 @@ Initialize a new project with ClaudeAtlas workflow.
 
 7. **Offer verify hook** (optional):
    Detect project type and offer to create `.atlas/verify.md`:
-   - Unity project (Assets/ folder) → Unity verification template
-   - Node project (package.json) → Node/fullstack verification template
-   - Python project (requirements.txt, pyproject.toml) → Python verification template
-   - Otherwise → Skip or offer generic template
+   - Unity project (Assets/ folder) → `~/.claude/atlas-templates/verify/unity.md`
+   - Node project (package.json) → `~/.claude/atlas-templates/verify/fullstack.md`
+   - Python project (requirements.txt, pyproject.toml) → `~/.claude/atlas-templates/verify/python.md`
+   - Otherwise → `~/.claude/atlas-templates/verify/default.md`
 
    Use AskUserQuestion: "Create custom verification workflow?"
-   - Yes, use detected template
+   - Yes, use detected template (copy from ~/.claude/atlas-templates/verify/)
    - Yes, create empty template
    - No, use inline verify commands
+
+   If yes, copy the appropriate template to `.atlas/verify.md` in the project.
 
 8. **Output**:
 ```
