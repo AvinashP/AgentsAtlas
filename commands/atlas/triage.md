@@ -1,5 +1,5 @@
 ---
-description: Pull and triage issues from external sources (Sentry, GitHub, etc.)
+description: Pull and triage issues from external sources (Sentry, GitHub, JIRA, etc.)
 allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, WebFetch, Bash(curl:*), Bash(gh:*)
 ---
 
@@ -11,11 +11,13 @@ Pull issues from external sources and triage them for planning.
 
 1. **Ask for source** using AskUserQuestion:
    - Sentry (project URL or paste exceptions)
+   - JIRA (sprint tickets assigned to you)
    - GitHub Issues (repo - uses `gh` CLI)
    - Manual input (paste list)
 
 2. **Fetch issues**:
    - **Sentry**: Use WebFetch with Sentry API or ask user to paste recent exceptions
+   - **JIRA**: Use JIRA REST API to fetch sprint tickets
    - **GitHub**: Run `gh issue list --repo {repo} --state open`
    - **Manual**: Accept pasted text, parse into list
 
@@ -89,6 +91,59 @@ Sentry Issues (v2.3.1, last 24h):
 |---|-------|--------|-------|------------|
 | 1 | NullRef in UserService | 234 | 89 | 2h ago |
 | 2 | Auth timeout on mobile | 45 | 23 | 6h ago |
+```
+
+## JIRA Integration
+
+### Parameters
+When JIRA is selected, ask using AskUserQuestion:
+
+1. **Sprint**:
+   - Options: "Current sprint", "Specific sprint (enter)"
+   - Default: "Current sprint"
+
+2. **Assignee**:
+   - Options: "Me", "Unassigned", "All"
+   - Default: "Me"
+
+3. **Status**:
+   - Options: "To Do only", "To Do + In Progress", "All open"
+   - Default: "To Do only"
+
+### Auth
+Check environment variables (or ask user):
+- `JIRA_URL` - Your JIRA instance (e.g., `https://company.atlassian.net`)
+- `JIRA_EMAIL` - Your JIRA email
+- `JIRA_API_TOKEN` - API token from https://id.atlassian.com/manage/api-tokens
+
+### Fetch Process
+```bash
+curl -s -u {email}:{token} \
+  "{jira_url}/rest/api/3/search?jql=sprint%20in%20openSprints()%20AND%20assignee=currentUser()%20AND%20status%20in%20(%22To%20Do%22)&fields=summary,priority,status,customfield_10016"
+```
+
+JQL breakdown:
+- `sprint in openSprints()` - Current active sprint
+- `assignee=currentUser()` - Assigned to me
+- `status in ("To Do")` - Not started yet
+
+### Example Output
+```
+JIRA Sprint Issues (Sprint 23, assigned to me):
+| # | Key | Summary | Priority | Points |
+|---|-----|---------|----------|--------|
+| 1 | PROJ-123 | Fix login timeout | High | 3 |
+| 2 | PROJ-456 | Add dark mode toggle | Medium | 5 |
+| 3 | PROJ-789 | Update user profile API | Low | 2 |
+```
+
+### Ticket Details
+When planning, include JIRA key in task name for traceability:
+```xml
+<task id="1">
+<name>[PROJ-123] Fix login timeout</name>
+...
+</task>
 ```
 
 ## GitHub Integration
