@@ -25,7 +25,7 @@ ${cyan}   █████╗ ████████╗██╗      ███
 
   Claude Atlas ${dim}v${pkg.version}${reset}
   Minimal workflow for Claude Code
-  5 commands. Fresh context. Quality execution.
+  7 commands. Fresh context. Quality execution.
 `;
 
 // Parse args
@@ -127,6 +127,7 @@ function install(isGlobal) {
     /atlas:status   Check progress
     /atlas:sync     Restore context after /clear
     /atlas:triage   Pull issues from Sentry/JIRA/GitHub
+    /atlas:complete Complete milestone and prepare next
 
   ${yellow}Templates installed to:${reset}
     ${locationLabel}/atlas-templates/

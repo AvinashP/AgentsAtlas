@@ -7,7 +7,7 @@ A minimal, effective workflow for building production-ready projects with Claude
 
 ## Philosophy
 
-- **6 commands** to manage any project
+- **7 commands** to manage any project
 - **Fresh context** via subagent execution (no degradation)
 - **XML task format** with verification steps
 - **3-5 tasks per plan** (quality over quantity)
@@ -23,6 +23,7 @@ A minimal, effective workflow for building production-ready projects with Claude
 | `/atlas:status` | Check progress, get next action |
 | `/atlas:sync` | Restore context after `/clear` |
 | `/atlas:triage` | Pull and triage issues from Sentry, GitHub, etc. |
+| `/atlas:complete` | Complete milestone, archive, and prepare for next work |
 
 ## Installation
 
@@ -86,11 +87,21 @@ your-project/
 ### Bug Triage Workflow
 
 ```
-/atlas:triage        # Pull issues from Sentry/GitHub
+/atlas:triage        # Pull issues from Sentry/GitHub/JIRA
     ↓
 /atlas:plan          # Plan fixes for selected issues
     ↓
 /atlas:execute       # Execute fix plan
+```
+
+### Milestone Completion
+
+```
+(all phases complete)
+    ↓
+/atlas:complete      # Archive, tag, prepare for next work
+    ↓
+/atlas:plan          # Start new milestone
 ```
 
 ### Context Management

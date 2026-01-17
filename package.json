@@ -1,7 +1,7 @@
 {
   "name": "claude-atlas",
-  "version": "1.1.0",
-  "description": "Minimal workflow for Claude Code - 6 commands, fresh context, quality execution",
+  "version": "1.2.0",
+  "description": "Minimal workflow for Claude Code - 7 commands, fresh context, quality execution",
   "bin": {
     "claude-atlas": "bin/install.js"
   },
