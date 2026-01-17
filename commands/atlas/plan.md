@@ -19,20 +19,26 @@ Create an executable plan for the current phase.
    - Read .planning/ROADMAP.md
    - If there's a previous phase summary, read it
 
-2. **Identify current phase** from STATE.md
+2. **Check scope alignment**:
+   - Read Current Scope from STATE.md
+   - Ensure planned tasks align with Core Value
+   - Flag if tasks seem outside "In Scope" items
+   - Never plan tasks that are "Out of Scope"
 
-3. **Ask clarifying questions** using AskUserQuestion tool (if needed):
+3. **Identify current phase** from STATE.md
+
+4. **Ask clarifying questions** using AskUserQuestion tool (if needed):
    - Only ask if the phase goal is unclear from ROADMAP.md
    - Use AskUserQuestion with options when possible (e.g., approach preferences)
    - Skip entirely if the phase is obvious from roadmap context
 
-4. **Create PLAN.md** in `.planning/phases/`:
+5. **Create PLAN.md** in `.planning/phases/`:
    - File: `.planning/phases/{NN}-PLAN.md` (e.g., `01-PLAN.md`)
    - Use XML task format
    - **Maximum 3-5 tasks** (this is critical for quality)
    - Each task must have: name, files, action, verify, done
 
-5. **Task format**:
+6. **Task format**:
 ```xml
 <task id="1">
 <name>Clear task name</name>
@@ -52,11 +58,11 @@ Specific implementation steps:
 - `verify` = How to test (commands, checks to run)
 - `done` = What success looks like (acceptance criteria)
 
-6. **Update STATE.md**:
+7. **Update STATE.md**:
    - Current Plan: `{NN}-PLAN.md`
    - Status: `planned`
 
-7. **Output**:
+8. **Output**:
 ```
 Plan created: .planning/phases/{NN}-PLAN.md
 

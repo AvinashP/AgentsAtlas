@@ -16,28 +16,72 @@ Initialize a new project with ClaudeAtlas workflow.
 
 2. **Create .planning directory** if it doesn't exist
 
-3. **Ask about the project** using AskUserQuestion tool:
-   Use a single AskUserQuestion call with these questions:
-   - "What are you building?" (free text - 1 sentence description)
-   - "What's the tech stack?" (options: detect from codebase if brownfield, or ask)
-   - "How many phases do you envision?" (options: 2-3, 4-5, 6+)
+3. **Scope Discovery** using AskUserQuestion tool:
+   Use adaptive questioning to capture project scope (max 4-5 questions total).
 
-   For brownfield projects, pre-fill detected info and ask for confirmation.
+   **Question 1 - Open exploration**:
+   "What do you want to build?"
+   - Let user describe freely via "Other" option
+   - Provide 2-3 common project types as starting options if helpful
 
-4. **Create or update CLAUDE.md**:
+   **Question 2 - Follow the thread**:
+   Based on their response, ask a clarifying follow-up:
+   - "You mentioned [X] — what would that look like?"
+   - Present 2-3 interpretations based on what they said + "Something else"
+   - This is adaptive, not a fixed question
+
+   **Question 3 - Sharpen the core**:
+   "If you could only nail ONE thing, what would it be?"
+   - Extract key themes from their description
+   - Offer as 2-4 options (e.g., "User experience", "Performance", "Simplicity")
+
+   **Question 4 - Find boundaries**:
+   "What's explicitly NOT in v1/this scope?"
+   - Offer common exclusions based on project type:
+     - For web apps: "Admin dashboard", "Mobile app", "Analytics"
+     - For CLI tools: "GUI", "Plugin system", "Cloud sync"
+     - For libraries: "CLI wrapper", "Web interface", "Database integration"
+   - Always include "Nothing specific yet"
+
+   **Question 5 - Ground in reality** (optional, combine with Q4 if simple):
+   "Any hard constraints?"
+   - Options: "Specific tech stack", "Timeline/deadline", "Must integrate with X", "None"
+
+   **Key principles**:
+   - Use AskUserQuestion for ALL questions with meaningful options
+   - Adapt follow-ups based on responses (not a rigid checklist)
+   - Don't ask about technical implementation details (that's Claude's job)
+   - Skip questions if answers are obvious from context
+   - For brownfield projects, pre-fill detected info and confirm
+
+4. **Confirm scope** (decision gate):
+   Summarize what you understood and use AskUserQuestion to confirm:
+   - "Here's what I captured: [summary]. Ready to proceed?"
+   - Options: "Yes, let's go", "Let me clarify something"
+   - If they want to clarify, ask one follow-up then proceed
+
+5. **Create or update CLAUDE.md**:
    - If CLAUDE.md exists: just add "## Current State" section with link to STATE.md
    - If new: create using template, keep under 30 lines
 
-5. **Create .planning/STATE.md**:
-   - Set Phase 1 of N (ask how many phases they envision)
+6. **Create .planning/STATE.md**:
+   Populate the Current Scope section using responses from scope discovery:
+   - **What**: User's description in their own words (2-3 sentences)
+   - **Core Value**: The ONE thing they said matters most
+   - **In Scope**: Active requirements extracted from their responses
+   - **Out of Scope**: Exclusions they mentioned + why
+   - **Constraints**: Tech stack, timeline, dependencies mentioned
+
+   Also set:
+   - Phase 1 of N (based on complexity of scope)
    - Status: not-started
    - Next Action: "Run /atlas:plan to plan Phase 1"
 
-6. **Create .planning/ROADMAP.md**:
+7. **Create .planning/ROADMAP.md**:
    - List phases as checkboxes
    - Keep descriptions to 3-5 words each
 
-7. **Offer verify hook** (optional):
+8. **Offer verify hook** (optional):
    Detect project type and offer to create `.atlas/verify.md`:
    - Unity project (Assets/ folder) → `~/.claude/atlas-templates/verify/unity.md`
    - Node project (package.json) → `~/.claude/atlas-templates/verify/fullstack.md`
@@ -51,7 +95,7 @@ Initialize a new project with ClaudeAtlas workflow.
 
    If yes, copy the appropriate template to `.atlas/verify.md` in the project.
 
-8. **Output**:
+9. **Output**:
 ```
 Project initialized.
 

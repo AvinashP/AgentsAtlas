@@ -1,5 +1,16 @@
 # Project State
 
+## Current Scope
+- **What**: {{2-3 sentence description in user's language}}
+- **Core Value**: {{THE ONE thing that matters most}}
+- **In Scope**:
+  - {{Active requirement 1}}
+  - {{Active requirement 2}}
+- **Out of Scope**:
+  - {{Exclusion 1}} — {{why}}
+  - {{Exclusion 2}} — {{why}}
+- **Constraints**: {{tech stack, timeline, dependencies, etc.}}
+
 ## Current Position
 - **Phase**: {{CURRENT_PHASE}} of {{TOTAL_PHASES}}
 - **Phase Status**: {{not-started|in-progress|complete}}
