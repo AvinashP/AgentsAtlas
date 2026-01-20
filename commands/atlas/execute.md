@@ -28,6 +28,17 @@ Execute this plan. For each task:
 2. Run verification (see VERIFICATION below)
 3. Make an atomic git commit: `feat({phase}): {task_name}`
 
+PRE-IMPLEMENTATION (before each task):
+1. Read files in the task's <files> section and their imports
+2. Identify existing patterns:
+   - Dependency structure (what classes/modules depend on what)
+   - Naming conventions and code organization
+   - How similar problems are solved elsewhere in the codebase
+3. Check CLAUDE.md "Anti-patterns" section if present
+4. Default: No new external dependencies unless task explicitly requires them
+5. Respect existing architecture — match the patterns you found
+6. If task requires deviating from patterns, ASK FIRST (per deviation rules)
+
 VERIFICATION:
 - First, check if `.atlas/verify.md` exists
 - If YES: Spawn a verify subagent with:
