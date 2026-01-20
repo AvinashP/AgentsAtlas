@@ -1,6 +1,6 @@
 ---
 description: Execute current plan via subagent with fresh context
-allowed-tools: Task, Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(npm:*), Bash(yarn:*), Bash(pnpm:*), Bash(bun:*), Bash(node:*), Bash(python:*), Bash(pip:*), Bash(cargo:*), Bash(go:*), Bash(dotnet:*), Bash(make:*), Bash(docker:*), Bash(ls:*)
+allowed-tools: Task, Read, Write, Edit, Glob, Grep, AskUserQuestion, Bash(git:*), Bash(npm:*), Bash(yarn:*), Bash(pnpm:*), Bash(bun:*), Bash(node:*), Bash(python:*), Bash(pip:*), Bash(cargo:*), Bash(go:*), Bash(dotnet:*), Bash(make:*), Bash(docker:*), Bash(ls:*)
 ---
 
 # Execute Plan
