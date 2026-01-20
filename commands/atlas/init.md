@@ -1,6 +1,6 @@
 ---
 description: Initialize project with CLAUDE.md, STATE.md, and ROADMAP.md
-allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(mkdir:*), Bash(git init:*), Bash(ls:*), Bash(cp:*)
+allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(mkdir:*), Bash(git init:*), Bash(git status:*), Bash(ls:*), Bash(cp:*)
 ---
 
 # Initialize Project

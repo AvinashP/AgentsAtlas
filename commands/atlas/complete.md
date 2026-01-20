@@ -1,6 +1,6 @@
 ---
 description: Complete current milestone and prepare for next work
-allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(git tag:*), Bash(git log:*), Bash(mv:*), Bash(mkdir:*)
+allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(git tag:*), Bash(git log:*), Bash(git status:*), Bash(mv:*), Bash(mkdir:*)
 ---
 
 # Complete Milestone
