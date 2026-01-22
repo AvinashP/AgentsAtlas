@@ -36,6 +36,7 @@ Review completed work for quality and capture learnings for CLAUDE.md.
    - **Code quality**: Error handling, types, DRY principle
    - **Architecture**: SOLID principles, separation of concerns
    - **Testing**: Coverage present, edge cases handled
+   - **Production readiness**: Breaking changes, migrations needed, backward compatibility
    - **Scope creep**: No unnecessary additions beyond plan
    - **Learnings**: Patterns that should be documented in CLAUDE.md
 
