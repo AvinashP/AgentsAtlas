@@ -31,4 +31,5 @@ See [STATE.md](.planning/STATE.md) for current position and recent decisions.
 - `/atlas:plan` - Plan next phase
 - `/atlas:execute` - Execute current plan
 - `/atlas:status` - Check progress
+- `/atlas:review` - Review changes, capture learnings
 - `/atlas:sync` - Refresh context after /clear
