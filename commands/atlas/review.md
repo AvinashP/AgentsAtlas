@@ -33,8 +33,7 @@ Review completed work for quality and capture learnings for CLAUDE.md.
 
 2. **Review checklist**:
    - **Plan alignment**: All requirements from PLAN.md met?
-   - **Code quality**: Error handling, types, DRY principle
-   - **Architecture**: SOLID principles, separation of concerns
+   - **Deep logic review**: See section below - think hard about what could silently fail
    - **Testing**: Coverage present, edge cases handled
    - **Production readiness**: Breaking changes, migrations needed, backward compatibility
    - **Scope creep**: No unnecessary additions beyond plan
@@ -49,19 +48,19 @@ Review completed work for quality and capture learnings for CLAUDE.md.
 
    ### Issues
 
-   #### Critical (Must Fix)
-   [Bugs, security issues, data loss risks - with file:line]
+   #### P0 Critical (Must Fix)
+   - file:line - Description
+     - What happens: [incorrect behavior]
+     - Fix: [specific fix]
 
-   #### Important (Should Fix)
-   [Architecture problems, missing tests, poor error handling - with file:line]
+   #### P1 Important (Should Fix)
+   - file:line - Description
 
-   #### Minor (Nice to Have)
-   [Style, optimization, documentation - with file:line]
+   #### P2 Minor (Nice to Have)
+   - file:line - Description
 
    ### CLAUDE.md Learnings
-   Patterns to add to CLAUDE.md:
-   - [Anti-pattern observed → rule to add]
-   - [Good pattern → document for consistency]
+   - [Pattern observed → rule to add]
 
    ### Verdict
    **Ready to proceed?** [Yes / No / With fixes]
@@ -96,9 +95,27 @@ Review completed work for quality and capture learnings for CLAUDE.md.
 
 ## Issue Severity Guide
 
-- **Critical**: Security vulnerabilities, data loss, crashes, blocking bugs
-- **Important**: Missing error handling, no tests for new code, architectural violations, missing validation
-- **Minor**: Style inconsistencies, minor optimizations, documentation gaps, nitpicks
+- **P0 Critical**: Security vulnerabilities, data loss, logic bugs that silently produce wrong output
+- **P1 Important**: Missing error handling, incomplete state coverage, untested edge cases
+- **P2 Minor**: Style, optimization, documentation
+
+## Deep Logic Review
+
+**This is the most important part of the review.** For each function/block changed, think hard:
+
+1. **Trace the data flow**: What inputs come in? What transformations happen? What goes out?
+2. **Find silent failures**: How could this produce wrong results without throwing an error?
+3. **Check all cases**: What states/values can reach this code? Are ALL of them handled?
+4. **Question assumptions**: What does this code assume? Could those assumptions be wrong?
+
+**The goal is to find bugs that compile and run but do the wrong thing.** These are harder to catch than crashes - the code "works" but produces incorrect output.
+
+Examples of what to look for:
+- A filter that excludes cases it shouldn't
+- A regex that never matches due to case/escaping
+- A dedup that loses data it should preserve
+- A status check that trusts a flag it shouldn't
+- A transformation that corrupts or drops information
 
 ## Rules
 - Be specific with references (file:line, not vague descriptions)
