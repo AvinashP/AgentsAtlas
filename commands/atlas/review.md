@@ -1,11 +1,20 @@
 ---
 description: Review code changes and capture learnings for CLAUDE.md
-allowed-tools: Read, Write, Edit, Glob, Grep, AskUserQuestion, Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git status:*), Bash(gh pr:*), Bash(gh api:*)
+allowed-tools: Read, Write, Edit, Glob, Grep, AskUserQuestion, Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git status:*), Bash(gh pr:*), Bash(gh api:*), Bash(npm test:*), Bash(npm run test:*), Bash(npx vitest:*), Bash(npx jest:*), Bash(pytest:*), Bash(python -m pytest:*), Bash(go test:*), Bash(cargo test:*), Bash(bun test:*)
 ---
 
 # Code Review
 
 Review completed work for quality and capture learnings for CLAUDE.md.
+
+## Reviewer Persona
+
+Adopt the mindset of a senior engineer who:
+- Maintains this codebase long-term
+- Has been burned by subtle bugs before
+- Cares about correctness over style
+- Would rather miss a nitpick than miss a logic bug
+- Values precision over recall (false positives erode trust)
 
 ## Usage
 
@@ -31,7 +40,27 @@ Review completed work for quality and capture learnings for CLAUDE.md.
      git diff HEAD~N..HEAD  # Diff for phase work
      ```
 
-2. **Review checklist**:
+2. **Verification (run tests first)**:
+   - Detect test framework: look for `package.json` (npm/bun), `pytest.ini`/`pyproject.toml` (pytest), `go.mod` (go), `Cargo.toml` (rust)
+   - Run the appropriate test command:
+     ```bash
+     npm test           # Node.js
+     pytest             # Python
+     go test ./...      # Go
+     cargo test         # Rust
+     bun test           # Bun
+     ```
+   - **Failing tests = automatic P0 issues** - no need to analyze further, the tests tell you what's broken
+   - Note which tests cover the changed code (for test coverage assessment)
+   - If no tests exist, note this as a P1 concern in the review
+
+3. **Context gathering (read related files)**:
+   - For each changed file, identify 1-2 files it imports or calls
+   - Read those related files to understand HOW the changed code is used
+   - Check CLAUDE.md for project-specific patterns and anti-patterns to look for
+   - This context helps catch bugs that are invisible in the diff alone
+
+4. **Review checklist**:
    - **Plan alignment**: All requirements from PLAN.md met?
    - **Deep logic review**: See section below - think hard about what could silently fail
    - **Testing**: Coverage present, edge cases handled
@@ -39,7 +68,7 @@ Review completed work for quality and capture learnings for CLAUDE.md.
    - **Scope creep**: No unnecessary additions beyond plan
    - **Learnings**: Patterns that should be documented in CLAUDE.md
 
-3. **Output format**:
+5. **Output format**:
    ```
    ## Review: Phase {N} - {Name}
 
@@ -66,7 +95,7 @@ Review completed work for quality and capture learnings for CLAUDE.md.
    **Ready to proceed?** [Yes / No / With fixes]
    ```
 
-4. **Offer to update CLAUDE.md**:
+6. **Offer to update CLAUDE.md**:
    If learnings identified, use AskUserQuestion:
    - "Add these learnings to CLAUDE.md?" (Yes/No)
    - If yes, append to appropriate section (Anti-patterns or Patterns)
@@ -101,21 +130,89 @@ Review completed work for quality and capture learnings for CLAUDE.md.
 
 ## Deep Logic Review
 
-**This is the most important part of the review.** For each function/block changed, think hard:
+**This is the most important part of the review.** The goal is to find bugs that compile and run but do the wrong thing - code that "works" but produces incorrect output.
 
-1. **Trace the data flow**: What inputs come in? What transformations happen? What goes out?
-2. **Find silent failures**: How could this produce wrong results without throwing an error?
-3. **Check all cases**: What states/values can reach this code? Are ALL of them handled?
-4. **Question assumptions**: What does this code assume? Could those assumptions be wrong?
+For each function changed, answer these questions:
 
-**The goal is to find bugs that compile and run but do the wrong thing.** These are harder to catch than crashes - the code "works" but produces incorrect output.
+1. **What are ALL the possible inputs?** (not just happy path)
+   - Empty arrays, null, undefined?
+   - Edge values (0, -1, MAX_INT)?
+   - Malformed data?
 
-Examples of what to look for:
-- A filter that excludes cases it shouldn't
-- A regex that never matches due to case/escaping
-- A dedup that loses data it should preserve
-- A status check that trusts a flag it shouldn't
-- A transformation that corrupts or drops information
+2. **What happens to data as it flows through?**
+   - Is anything dropped or overwritten?
+   - Are transformations reversible when they should be?
+   - Is ordering preserved when it matters?
+
+3. **What does this code assume?**
+   - Write down each assumption explicitly
+   - Could any assumption be violated?
+
+4. **How could this silently produce wrong output?**
+   - Not crash, not throw - just wrong results
+   - This is the hardest bug type to find
+
+## What Real Bugs Look Like
+
+Use these few-shot examples to calibrate what you're looking for. Real bugs often follow these patterns:
+
+### Case Sensitivity Mismatch
+```javascript
+// Bug: Code lowercases but regex expects uppercase
+const normalized = file.path.toLowerCase();
+return /Gemfile$/.test(normalized);  // Never matches!
+```
+**Pattern**: Input normalization doesn't match the check that follows.
+
+### Incomplete State Handling
+```javascript
+// Bug: Handles most statuses but misses one
+switch (file.status) {
+  case 'modified': /* ... */ break;
+  case 'created': /* ... */ break;
+  case 'deleted': /* ... */ break;
+  // Missing: 'renamed' has both `from` and `to` paths!
+}
+```
+**Pattern**: Exhaustive-looking switch/if that actually misses a case.
+
+### Lossy Transformation
+```javascript
+// Bug: Dedup keeps last, but needed to merge first + last
+const byPath = new Map();
+for (const change of changes) {
+  byPath.set(change.path, change);  // Overwrites previous!
+}
+// Result: Lost the "before" state from first entry
+```
+**Pattern**: Aggregation that overwrites instead of merges.
+
+### Status vs Verification Conflation
+```javascript
+// Bug: Trusts status flag that doesn't mean what we think
+if (pr.status === 'committed') {
+  markAsVerified(pr);  // But commits can happen before CI runs!
+}
+```
+**Pattern**: A status field that sounds authoritative but doesn't guarantee what the code assumes.
+
+### Off-by-One in Boundaries
+```javascript
+// Bug: Fence-post error
+for (let i = 0; i <= items.length; i++) {  // Should be <, not <=
+  process(items[i]);  // Undefined on last iteration
+}
+```
+**Pattern**: Loop bounds or slice indices that are off by one.
+
+### Project-Specific Patterns
+
+Also check CLAUDE.md for:
+- Anti-patterns specific to this codebase
+- Past bugs that were caught in reviews
+- Domain-specific gotchas
+
+These project-specific patterns often catch bugs that generic patterns miss.
 
 ## Rules
 - Be specific with references (file:line, not vague descriptions)
