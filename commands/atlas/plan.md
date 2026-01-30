@@ -27,18 +27,27 @@ Create an executable plan for the current phase.
 
 3. **Identify current phase** from STATE.md
 
-4. **Ask clarifying questions** using AskUserQuestion tool (if needed):
-   - Only ask if the phase goal is unclear from ROADMAP.md
-   - Use AskUserQuestion with options when possible (e.g., approach preferences)
+4. **Explore approaches** (per /brainstorming skill, if phase goal is unclear):
+   - If ROADMAP.md phase description is vague or has multiple valid approaches:
+     a. Identify 2-3 possible approaches with trade-offs
+     b. Use AskUserQuestion with options: "Which approach for {phase}?"
+     c. Document chosen approach in STATE.md "Recent Decisions" section
+   - Example: Phase "API layer" could be REST vs GraphQL vs gRPC
+   - Skip if the phase goal is obvious and has only one reasonable approach
+
+5. **Ask clarifying questions** using AskUserQuestion tool (if needed):
+   - Only ask if specific requirements are unclear after approach is chosen
+   - Use AskUserQuestion with options when possible
    - Skip entirely if the phase is obvious from roadmap context
 
-5. **Create PLAN.md** in `.planning/phases/`:
+6. **Create PLAN.md** in `.planning/phases/` (with TDD mindset per /testing skill):
    - File: `.planning/phases/{NN}-PLAN.md` (e.g., `01-PLAN.md`)
    - Use XML task format
    - **Maximum 3-5 tasks** (this is critical for quality)
    - Each task must have: name, files, action, verify, done
+   - Think "what test would prove this works?" when writing verify/done
 
-6. **Task format**:
+7. **Task format**:
 ```xml
 <task id="1">
 <name>Clear task name</name>
@@ -58,11 +67,11 @@ Specific implementation steps:
 - `verify` = How to test (commands, checks to run)
 - `done` = What success looks like (acceptance criteria)
 
-7. **Update STATE.md**:
+8. **Update STATE.md**:
    - Current Plan: `{NN}-PLAN.md`
    - Status: `planned`
 
-8. **Output**:
+9. **Output**:
 ```
 Plan created: .planning/phases/{NN}-PLAN.md
 

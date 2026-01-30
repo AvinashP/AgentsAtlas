@@ -16,8 +16,9 @@ Initialize a new project with ClaudeAtlas workflow.
 
 2. **Create .planning directory** if it doesn't exist
 
-3. **Scope Discovery** using AskUserQuestion tool:
-   Use adaptive questioning to capture project scope (max 4-5 questions total).
+3. **Scope Discovery** (per /brainstorming skill, use adaptive questioning):
+   Use the brainstorming approach: one question at a time, explore collaboratively.
+   Max 4-5 questions total.
 
    **Question 1 - Open exploration**:
    "What do you want to build?"
@@ -110,7 +111,13 @@ Next: Run /atlas:plan to create your first execution plan.
 
 ## For Existing Codebases (Brownfield)
 
-If code already exists, briefly scan and note in CLAUDE.md:
+If code already exists, use /scaffolding skill's convention detection:
+- Detect project type (React, Node, Python, etc.)
+- Identify naming patterns (camelCase, snake_case)
+- Note folder structure conventions
+- Find existing patterns for similar code
+
+Briefly scan and note in CLAUDE.md:
 - Key directories (src/, lib/, tests/)
 - Entry points (main.ts, index.js, app.py)
 - Config files (package.json, tsconfig, .env.example)

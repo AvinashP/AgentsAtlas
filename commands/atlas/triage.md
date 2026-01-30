@@ -48,22 +48,31 @@ SENTRY_AUTH_TOKEN=your-sentry-token
    | 3 | Dashboard slow load | low | 12/day | GitHub |
    ```
 
-4. **Triage** using AskUserQuestion (multi-select):
+4. **Evaluate issues** (per /receiving-feedback skill):
+   Before triaging, apply critical evaluation:
+   - Is this a real issue or noise? (check frequency, user impact)
+   - Is the root cause clear or needs investigation? (per /debugging skill)
+   - Is this actionable or too vague?
+   - Flag issues that need root cause analysis before planning
+
+5. **Triage** using AskUserQuestion (multi-select):
    - Which issues to fix now?
    - Which to defer?
+   - Which need investigation first? (mark for /debugging)
    - Which to ignore/close?
 
-5. **Update STATE.md**:
+6. **Update STATE.md**:
    - Add selected issues to "Deferred Issues" section
    - Tag with severity: `[critical]`, `[major]`, `[minor]`
+   - Tag issues needing investigation: `[needs-debug]`
    - Example:
      ```markdown
      ## Deferred Issues
      - [ ] [critical] NullRef in UserService - 234/day, from Sentry
-     - [ ] [major] Auth timeout on mobile - 45/day, from Sentry
+     - [ ] [major][needs-debug] Auth timeout on mobile - 45/day, from Sentry
      ```
 
-6. **Output**:
+7. **Output**:
    ```
    Triaged {N} issues:
    - {X} selected for fixing

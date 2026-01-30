@@ -62,6 +62,7 @@ Adopt the mindset of a senior engineer who:
 
 4. **Review checklist**:
    - **Plan alignment**: All requirements from PLAN.md met?
+   - **Security audit** (per /security-audit skill): See section below
    - **Deep logic review**: See section below - think hard about what could silently fail
    - **Testing**: Coverage present, edge cases handled
    - **Production readiness**: Breaking changes, migrations needed, backward compatibility
@@ -213,6 +214,38 @@ Also check CLAUDE.md for:
 - Domain-specific gotchas
 
 These project-specific patterns often catch bugs that generic patterns miss.
+
+## Security Audit (per /security-audit skill)
+
+For every review, check OWASP Top 10 vulnerabilities in changed code:
+
+1. **Map attack surface** in changed files:
+   - API endpoints, form handlers, URL parameters
+   - Database queries, file operations
+   - Authentication/authorization checks
+
+2. **Check for common vulnerabilities**:
+   | Vulnerability | What to look for |
+   |---------------|------------------|
+   | **Injection** | User input in SQL, commands, templates without sanitization |
+   | **Broken Auth** | Missing auth checks, weak session handling, exposed tokens |
+   | **XSS** | User input rendered without escaping |
+   | **Insecure Direct Object Ref** | IDs in URLs without ownership validation |
+   | **Security Misconfiguration** | Debug modes, default credentials, verbose errors |
+   | **Sensitive Data Exposure** | Secrets in code, unencrypted sensitive data, excessive logging |
+
+3. **Severity classification**:
+   - **P0 Security**: Exploitable vulnerability (injection, auth bypass) → Must fix before merge
+   - **P1 Security**: Potential vulnerability (missing validation) → Should fix
+   - **P2 Security**: Hardening opportunity (rate limiting, headers) → Nice to have
+
+4. **Output format** (add to Issues section):
+   ```
+   #### Security Issues
+   - [P0 SECURITY] file:line - SQL injection via unsanitized user input
+     - Attack vector: POST /api/users with malicious `name` field
+     - Fix: Use parameterized query
+   ```
 
 ## Rules
 - Be specific with references (file:line, not vague descriptions)

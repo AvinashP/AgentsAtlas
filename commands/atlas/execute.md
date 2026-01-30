@@ -24,9 +24,12 @@ Execute the current plan using a subagent for fresh context.
 3. **Subagent prompt template**:
 ```
 Execute this plan. For each task:
-1. Implement the action steps
-2. Run verification (see VERIFICATION below)
-3. Make an atomic git commit: `feat({phase}): {task_name}`
+
+SKILL DISCIPLINES (follow these throughout):
+- /testing: TDD Red-Green-Refactor cycle
+- /verifying: Evidence before completion claims
+- /debugging: Root cause before fixes
+- /committing: Conventional commit format
 
 PRE-IMPLEMENTATION (before each task):
 1. Read files in the task's <files> section and their imports
@@ -39,14 +42,35 @@ PRE-IMPLEMENTATION (before each task):
 5. Respect existing architecture — match the patterns you found
 6. If task requires deviating from patterns, ASK FIRST (per deviation rules)
 
-VERIFICATION:
-- First, check if `.atlas/verify.md` exists
-- If YES: Spawn a verify subagent with:
-  - Task name and files changed
-  - The <verify> hint from the task
-  - Full .atlas/verify.md instructions
-  - Only proceed if verify subagent reports success
-- If NO: Run the <verify> command directly
+IMPLEMENTATION (TDD cycle per /testing skill):
+1. RED: Write failing test that proves task requirement works
+   - Run test, verify it FAILS with expected error
+   - If no test framework, write manual verification script
+2. GREEN: Implement MINIMAL code to pass test
+   - No extra features, no premature optimization
+   - Run test, verify it PASSES
+3. REFACTOR: Clean up if needed (keep tests green)
+
+VERIFICATION (per /verifying skill):
+Before ANY completion claim, follow this gate:
+1. IDENTIFY: What command proves this works?
+2. RUN: Execute the FULL command in fresh state
+3. READ: Check complete output AND exit code
+4. CONFIRM: Does output actually confirm success?
+5. ONLY THEN: Claim task complete with evidence
+
+If using `.atlas/verify.md`:
+- Spawn verify subagent with task name, files changed, <verify> hint
+- Only proceed if verify subagent reports success
+If no `.atlas/verify.md`: Run the <verify> command directly
+
+COMMITTING (per /committing skill):
+After each task passes verification:
+- Format: `type(scope): description`
+- Types: feat, fix, refactor, test, docs, chore
+- Scope: module or feature area
+- Description: imperative mood, lowercase, no period
+- Example: `feat(auth): add JWT token generation`
 
 DEVIATION RULES (follow strictly):
 - AUTO-FIX: Bugs, broken imports, missing error handling → fix immediately, note in summary
@@ -152,8 +176,18 @@ When `.atlas/verify.md` exists, execute spawns a dedicated verify subagent after
 
 If no `.atlas/verify.md` exists, falls back to running `<verify>` command directly.
 
-## On Failure
-If a task fails:
-1. Subagent should stop and report what failed
-2. Don't continue to next task
-3. Return control to main for decision
+## On Failure (per /debugging skill)
+
+If a task fails, follow root cause investigation BEFORE proposing fixes:
+
+1. **STOP** - No immediate fix attempts
+2. **Investigate root cause**:
+   - Read the COMPLETE error message
+   - Reproduce the failure consistently
+   - Trace data flow backward from failure point
+   - Identify the ACTUAL cause (not symptoms)
+3. **Document understanding**: "The failure occurs because X, caused by Y"
+4. **Only then propose fix** based on root cause understanding
+5. **Return control to main** for decision on how to proceed
+
+Never guess at fixes. Understanding first, fixing second.
