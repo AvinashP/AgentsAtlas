@@ -117,6 +117,33 @@ function install(isGlobal) {
   copyDir(templatesSrc, templatesDest);
   console.log(`  ${green}✓${reset} Installed atlas-templates`);
 
+  // Copy skills
+  const skillsSrc = path.join(src, 'skills');
+  const skillsDest = path.join(claudeDir, 'skills');
+
+  // Only install skills if they exist in the source
+  if (fs.existsSync(skillsSrc)) {
+    // Create skills directory
+    fs.mkdirSync(skillsDest, { recursive: true });
+
+    // Copy each skill, preserving existing user skills
+    const skills = fs.readdirSync(skillsSrc, { withFileTypes: true });
+    for (const skill of skills) {
+      if (skill.isDirectory()) {
+        const skillSrcPath = path.join(skillsSrc, skill.name);
+        const skillDestPath = path.join(skillsDest, skill.name);
+
+        // Remove existing skill if present (update)
+        if (fs.existsSync(skillDestPath)) {
+          fs.rmSync(skillDestPath, { recursive: true });
+        }
+
+        copyDir(skillSrcPath, skillDestPath);
+      }
+    }
+    console.log(`  ${green}✓${reset} Installed skills (${skills.filter(s => s.isDirectory()).length} skills)`);
+  }
+
   console.log(`
   ${green}Done!${reset}
 
@@ -128,6 +155,25 @@ function install(isGlobal) {
     /atlas:sync     Restore context after /clear
     /atlas:triage   Pull issues from Sentry/JIRA/GitHub
     /atlas:complete Complete milestone and prepare next
+    /atlas:review   Review code and capture learnings
+
+  ${yellow}Skills installed (11 skills):${reset}
+    ${cyan}Discipline:${reset}
+    /debugging          Systematic root cause analysis (Iron Law)
+    /testing            Test-driven development (Red-Green-Refactor)
+    /verifying          Evidence before completion claims
+
+    ${cyan}Workflow:${reset}
+    /brainstorming      Turn ideas into validated designs
+    /committing         Quality conventional commits
+    /creating-pr        PRs with verification
+    /receiving-feedback Handle code review with rigor
+
+    ${cyan}Code Quality:${reset}
+    /refactoring        Safe code restructuring
+    /security-audit     OWASP vulnerabilities
+    /explaining-code    Diagrams and analogies
+    /scaffolding        Generate boilerplate
 
   ${yellow}Templates installed to:${reset}
     ${locationLabel}/atlas-templates/

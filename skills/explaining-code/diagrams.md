@@ -1,0 +1,354 @@
+# ASCII Diagram Patterns
+
+Ready-to-use ASCII diagram patterns for explaining code.
+
+## Basic Shapes
+
+### Boxes and Containers
+
+```
+Simple box:
+┌──────────────┐
+│   Content    │
+└──────────────┘
+
+Labeled box:
+┌─ Label ──────┐
+│   Content    │
+│   Content    │
+└──────────────┘
+
+Double border:
+╔══════════════╗
+║   Content    ║
+╚══════════════╝
+
+Rounded:
+╭──────────────╮
+│   Content    │
+╰──────────────╯
+```
+
+### Arrows
+
+```
+Horizontal:    →  ─▶  ═▶
+Vertical:      ↓  │   ║
+               ▼  ▼   ▼
+Diagonal:      ╲  ╱
+Bidirectional: ↔  ⟷  ◀─▶
+```
+
+---
+
+## Architecture Diagrams
+
+### Client-Server
+
+```
+┌─────────┐         ┌─────────┐         ┌─────────┐
+│ Browser │ ──────▶ │   API   │ ──────▶ │Database │
+│ (React) │ ◀────── │ (Node)  │ ◀────── │ (Mongo) │
+└─────────┘  HTTP   └─────────┘  Query  └─────────┘
+```
+
+### Microservices
+
+```
+              ┌─────────────┐
+              │ API Gateway │
+              └──────┬──────┘
+         ┌──────────┼──────────┐
+         ▼          ▼          ▼
+    ┌─────────┐ ┌─────────┐ ┌─────────┐
+    │  Auth   │ │  Users  │ │ Orders  │
+    │ Service │ │ Service │ │ Service │
+    └────┬────┘ └────┬────┘ └────┬────┘
+         │          │          │
+         ▼          ▼          ▼
+    ┌─────────┐ ┌─────────┐ ┌─────────┐
+    │  Auth   │ │  Users  │ │ Orders  │
+    │   DB    │ │   DB    │ │   DB    │
+    └─────────┘ └─────────┘ └─────────┘
+```
+
+### Event-Driven
+
+```
+┌──────────┐    Event    ┌──────────────┐
+│ Producer │ ──────────▶ │ Message Bus  │
+└──────────┘             │   (Kafka)    │
+                         └──────┬───────┘
+                 ┌───────────┬──┴──┬───────────┐
+                 ▼           ▼     ▼           ▼
+            ┌─────────┐ ┌─────────┐ ┌─────────┐
+            │Consumer │ │Consumer │ │Consumer │
+            │   A     │ │   B     │ │   C     │
+            └─────────┘ └─────────┘ └─────────┘
+```
+
+---
+
+## Data Flow Diagrams
+
+### Request/Response
+
+```
+Client                    Server                    Database
+  │                         │                          │
+  │   1. HTTP Request       │                          │
+  │ ─────────────────────▶  │                          │
+  │                         │   2. SQL Query           │
+  │                         │ ──────────────────────▶  │
+  │                         │                          │
+  │                         │   3. Result Set          │
+  │                         │ ◀──────────────────────  │
+  │   4. HTTP Response      │                          │
+  │ ◀─────────────────────  │                          │
+  │                         │                          │
+```
+
+### Pipeline
+
+```
+Input ──▶ [Stage 1] ──▶ [Stage 2] ──▶ [Stage 3] ──▶ Output
+             │             │             │
+             ▼             ▼             ▼
+          Validate      Transform     Format
+```
+
+### State Machine
+
+```
+            start
+              │
+              ▼
+        ┌───────────┐
+        │   Idle    │◀───────────┐
+        └─────┬─────┘            │
+         click│                  │done
+              ▼                  │
+        ┌───────────┐      ┌─────┴─────┐
+        │  Loading  │─────▶│  Success  │
+        └─────┬─────┘      └───────────┘
+         error│
+              ▼
+        ┌───────────┐
+        │   Error   │
+        └─────┬─────┘
+         retry│
+              │
+              ▼
+          (back to Idle)
+```
+
+---
+
+## Component Diagrams
+
+### React Component Tree
+
+```
+<App>
+  │
+  ├── <Header>
+  │     ├── <Logo />
+  │     └── <Nav>
+  │           ├── <NavItem />
+  │           └── <NavItem />
+  │
+  ├── <Main>
+  │     └── <Content>
+  │           ├── <Article />
+  │           └── <Sidebar />
+  │
+  └── <Footer />
+```
+
+### Module Dependencies
+
+```
+     ┌──────────────┐
+     │     App      │
+     └──────┬───────┘
+            │
+    ┌───────┼───────┐
+    ▼       ▼       ▼
+┌───────┐ ┌────┐ ┌──────┐
+│ Auth  │ │ UI │ │ API  │
+└───┬───┘ └────┘ └───┬──┘
+    │                │
+    └────────┬───────┘
+             ▼
+         ┌───────┐
+         │ Utils │
+         └───────┘
+```
+
+### Class Inheritance
+
+```
+        ┌─────────────┐
+        │   Animal    │
+        │ ─────────── │
+        │  name       │
+        │  speak()    │
+        └──────┬──────┘
+               │
+       ┌───────┴───────┐
+       ▼               ▼
+┌─────────────┐  ┌─────────────┐
+│     Dog     │  │     Cat     │
+│ ─────────── │  │ ─────────── │
+│  breed      │  │  indoor     │
+│  bark()     │  │  meow()     │
+└─────────────┘  └─────────────┘
+```
+
+---
+
+## Algorithm Diagrams
+
+### Binary Tree
+
+```
+            ┌───┐
+            │ 8 │
+            └─┬─┘
+         ┌───┴───┐
+         ▼       ▼
+       ┌───┐   ┌───┐
+       │ 3 │   │ 10│
+       └─┬─┘   └─┬─┘
+       ┌─┴─┐     └─┐
+       ▼   ▼       ▼
+     ┌───┐ ┌───┐ ┌───┐
+     │ 1 │ │ 6 │ │ 14│
+     └───┘ └───┘ └───┘
+```
+
+### Stack Operations
+
+```
+Push(A):    Push(B):    Push(C):    Pop():
+┌───┐       ┌───┐       ┌───┐       ┌───┐
+│   │       │   │       │ C │ ──▶   │   │
+├───┤       ├───┤       ├───┤       ├───┤
+│   │       │ B │       │ B │       │ B │
+├───┤       ├───┤       ├───┤       ├───┤
+│ A │       │ A │       │ A │       │ A │
+└───┘       └───┘       └───┘       └───┘
+```
+
+### Queue Operations
+
+```
+Enqueue:                    Dequeue:
+   ┌───┬───┬───┬───┐           ┌───┬───┬───┬───┐
+   │ A │ B │ C │ D │ ◀── in    │   │ B │ C │ D │
+   └───┴───┴───┴───┘           └───┴───┴───┴───┘
+        out ──▶                       out ──▶ A
+```
+
+---
+
+## Sequence Diagrams
+
+### Simple Sequence
+
+```
+User          Frontend        Backend         Database
+ │               │               │               │
+ │  Click        │               │               │
+ │──────────────▶│               │               │
+ │               │  API Call     │               │
+ │               │──────────────▶│               │
+ │               │               │  Query        │
+ │               │               │──────────────▶│
+ │               │               │  Data         │
+ │               │               │◀──────────────│
+ │               │  Response     │               │
+ │               │◀──────────────│               │
+ │  Display      │               │               │
+ │◀──────────────│               │               │
+```
+
+### With Conditions
+
+```
+Client              Server
+  │                    │
+  │   Login Request    │
+  │───────────────────▶│
+  │                    │
+  │                  ┌─┴─┐
+  │                  │if │
+  │                  │OK │
+  │◀──────────────── │   │ ── Token
+  │                  │   │
+  │                  │else
+  │◀──────────────── │   │ ── Error
+  │                  └─┬─┘
+  │                    │
+```
+
+---
+
+## Memory Diagrams
+
+### Stack vs Heap
+
+```
+Stack                    Heap
+┌─────────────┐         ┌─────────────────────────┐
+│ main()      │         │                         │
+├─────────────┤         │  ┌─────────────────┐    │
+│  x = 5      │         │  │ { name: "John"} │    │
+├─────────────┤         │  └─────────────────┘    │
+│  y = 10     │         │         ▲               │
+├─────────────┤         │         │               │
+│  obj ───────┼─────────┼─────────┘               │
+├─────────────┤         │                         │
+│ func()      │         │                         │
+├─────────────┤         │                         │
+│  a = 3      │         │                         │
+└─────────────┘         └─────────────────────────┘
+```
+
+### Reference vs Value
+
+```
+Value Type:                Reference Type:
+┌───┐  copy  ┌───┐         ┌───┐  copy  ┌───┐
+│ 5 │ ─────▶ │ 5 │         │ ● │ ─────▶ │ ● │
+└───┘        └───┘         └─┬─┘        └─┬─┘
+  a            b             │            │
+                             └──────┬─────┘
+                                    ▼
+                              ┌─────────┐
+                              │ {x: 10} │
+                              └─────────┘
+```
+
+---
+
+## Quick Reference
+
+### Common Symbols
+
+```
+Process:       ◯  □  ◇
+Decision:      ◇  <>
+Data:          ▱  ▭
+Start/End:     ◯  ⬭
+Arrow:         →  ─▶  ═▶  ⟶
+```
+
+### Box Drawing Characters
+
+```
+Corners:  ┌ ┐ └ ┘  ╔ ╗ ╚ ╝  ╭ ╮ ╰ ╯
+Lines:    ─ │      ═ ║      ━ ┃
+T-shapes: ┬ ┴ ├ ┤  ╦ ╩ ╠ ╣
+Cross:    ┼        ╬
+```

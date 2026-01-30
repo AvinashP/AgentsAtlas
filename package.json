@@ -8,7 +8,8 @@
   "files": [
     "bin",
     "commands",
-    "templates"
+    "templates",
+    "skills"
   ],
   "keywords": [
     "claude",
