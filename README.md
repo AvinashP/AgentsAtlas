@@ -55,6 +55,21 @@ git clone https://github.com/AvinashP/ClaudeAtlas.git
 ln -s $(pwd)/ClaudeAtlas/commands/atlas ~/.claude/commands/atlas
 ```
 
+## Skills
+
+ClaudeAtlas includes **11 development skills** that provide disciplined workflows:
+
+| Category | Skills |
+|----------|--------|
+| **Discipline** | `debugging`, `testing`, `verifying` |
+| **Process** | `brainstorming`, `receiving-feedback` |
+| **Git** | `committing`, `creating-pr` |
+| **Code Quality** | `refactoring`, `security-audit` |
+| **Utility** | `explaining-code`, `scaffolding` |
+
+These skills emphasize the **Iron Law** approach—finding root causes before fixes, evidence before claims, and test-driven development.
+
+
 ## Project Structure
 
 After `/atlas:init`, your project will have:
