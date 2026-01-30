@@ -157,7 +157,7 @@ function install(isGlobal) {
     /atlas:complete Complete milestone and prepare next
     /atlas:review   Review code and capture learnings
 
-  ${yellow}Skills installed (11 skills):${reset}
+  ${yellow}Skills installed (16 skills):${reset}
     ${cyan}Discipline:${reset}
     /debugging          Systematic root cause analysis (Iron Law)
     /testing            Test-driven development (Red-Green-Refactor)
@@ -174,6 +174,13 @@ function install(isGlobal) {
     /security-audit     OWASP vulnerabilities
     /explaining-code    Diagrams and analogies
     /scaffolding        Generate boilerplate
+
+    ${cyan}Building:${reset}
+    /frontend-design    Production-grade UI design
+    /mcp-builder        Create MCP servers
+    /web-artifacts-builder  Multi-component HTML artifacts
+    /webapp-testing     Playwright browser testing
+    /skill-creator      Create new skills
 
   ${yellow}Templates installed to:${reset}
     ${locationLabel}/atlas-templates/

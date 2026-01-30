@@ -57,7 +57,7 @@ ln -s $(pwd)/ClaudeAtlas/commands/atlas ~/.claude/commands/atlas
 
 ## Skills
 
-ClaudeAtlas includes **11 development skills** that provide disciplined workflows:
+ClaudeAtlas includes **16 development skills** that provide disciplined workflows:
 
 | Category | Skills |
 |----------|--------|
@@ -66,8 +66,9 @@ ClaudeAtlas includes **11 development skills** that provide disciplined workflow
 | **Git** | `committing`, `creating-pr` |
 | **Code Quality** | `refactoring`, `security-audit` |
 | **Utility** | `explaining-code`, `scaffolding` |
+| **Building** | `frontend-design`, `mcp-builder`, `web-artifacts-builder`, `webapp-testing`, `skill-creator` |
 
-These skills emphasize the **Iron Law** approach—finding root causes before fixes, evidence before claims, and test-driven development.
+The first 11 skills emphasize the **Iron Law** approach—finding root causes before fixes, evidence before claims, and test-driven development. The building skills (from Anthropic) provide production-grade UI design, MCP server creation, and testing capabilities.
 
 
 ## Project Structure
