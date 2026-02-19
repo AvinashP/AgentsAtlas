@@ -5,4 +5,7 @@ description: Create executable plan for the current phase (3-5 tasks). Reads the
 
 Read the canonical plan command markdown at `commands/atlas/plan.md` and follow it exactly.
 
+Codex command style:
+- Replace any `/atlas:<command>` references from canonical docs with `$atlas:<command>` in Codex responses.
+
 Safety: do not implement code; only produce plan artifacts.
