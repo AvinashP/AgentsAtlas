@@ -1,0 +1,51 @@
+# Project-scoped Codex profiles for Atlas wrappers.
+# CLI flags override profiles; profiles override global user config.
+
+[profiles.atlas-init]
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model_reasoning_effort = "medium"
+web_search = "auto"
+
+[profiles.atlas-plan]
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model_reasoning_effort = "medium"
+web_search = "auto"
+
+[profiles.atlas-execute]
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model_reasoning_effort = "high"
+web_search = "auto"
+
+[profiles.atlas-status]
+approval_policy = "on-request"
+sandbox_mode = "read-only"
+model_reasoning_effort = "medium"
+web_search = "auto"
+
+[profiles.atlas-sync]
+approval_policy = "on-request"
+sandbox_mode = "read-only"
+model_reasoning_effort = "medium"
+web_search = "auto"
+
+[profiles.atlas-triage]
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model_reasoning_effort = "medium"
+web_search = "auto"
+
+[profiles.atlas-complete]
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model_reasoning_effort = "medium"
+web_search = "auto"
+
+[profiles.atlas-review]
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model_reasoning_effort = "medium"
+web_search = "auto"
+

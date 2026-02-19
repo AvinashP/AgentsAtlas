@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+# Optional env overrides:
+# - ATLAS_PROFILE=atlas-<command>
+# - ATLAS_JSON=1
+# - ATLAS_OUTPUT_LAST_MESSAGE=/tmp/last.txt
+# - ATLAS_OUTPUT_SCHEMA=./schema.json
+ATLAS_PROFILE="${ATLAS_PROFILE:-atlas-init}"
+PROMPT="Open and follow .agents/skills/atlas-init/SKILL.md. Initialize workflow artifacts according to the canonical command."
+
+CODEX_ARGS=(exec --ephemeral --profile "$ATLAS_PROFILE")
+if [[ "${ATLAS_JSON:-0}" == "1" ]]; then
+  CODEX_ARGS+=(--json)
+fi
+if [[ -n "${ATLAS_OUTPUT_LAST_MESSAGE:-}" ]]; then
+  CODEX_ARGS+=(--output-last-message "$ATLAS_OUTPUT_LAST_MESSAGE")
+fi
+if [[ -n "${ATLAS_OUTPUT_SCHEMA:-}" ]]; then
+  CODEX_ARGS+=(--output-schema "$ATLAS_OUTPUT_SCHEMA")
+fi
+
+codex "${CODEX_ARGS[@]}" "$PROMPT"

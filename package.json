@@ -1,7 +1,11 @@
 {
   "name": "claude-atlas",
-  "version": "1.2.0",
-  "description": "Minimal workflow for Claude Code - 7 commands, fresh context, quality execution",
+  "version": "1.6.0",
+  "description": "Minimal workflow for Claude Code - 8 commands, fresh context, quality execution",
+  "scripts": {
+    "sync:atlas": "node scripts/sync-atlas-artifacts.mjs",
+    "check:atlas": "node --check bin/install.js && node --check scripts/sync-atlas-artifacts.mjs"
+  },
   "bin": {
     "claude-atlas": "bin/install.js"
   },

@@ -6,11 +6,11 @@
   "plugins": [
     {
       "name": "claude-atlas",
-      "description": "Minimal workflow for Claude Code - 7 commands, fresh context, quality execution",
+      "description": "Minimal workflow for Claude Code - 8 commands, fresh context, quality execution",
       "author": {
         "name": "AvinashP"
       },
-      "version": "1.2.0",
+      "version": "1.6.0",
       "source": "./"
     }
   ]

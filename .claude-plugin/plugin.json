@@ -1,6 +1,6 @@
 {
   "name": "claude-atlas",
-  "version": "1.3.0",
+  "version": "1.6.0",
   "description": "Minimal workflow for Claude Code - 8 commands, fresh context, quality execution",
   "author": {
     "name": "AvinashP"
