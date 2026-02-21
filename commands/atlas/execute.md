@@ -18,6 +18,7 @@ Execute the current plan using a subagent for fresh context.
 
 2. **Spawn subagent** using Task tool:
    - Pass the full plan content
+   - Include AGENTS.md context (if present)
    - Include CLAUDE.md context
    - Include any files listed in plan's "Context Required"
 
@@ -37,7 +38,7 @@ PRE-IMPLEMENTATION (before each task):
    - Dependency structure (what classes/modules depend on what)
    - Naming conventions and code organization
    - How similar problems are solved elsewhere in the codebase
-3. Check CLAUDE.md "Anti-patterns" section if present
+3. Check AGENTS.md instructions first (if present), then CLAUDE.md "Anti-patterns" section (if present)
 4. Default: No new external dependencies unless task explicitly requires them
 5. Respect existing architecture — match the patterns you found
 6. If task requires deviating from patterns, ASK FIRST (per deviation rules)
@@ -107,6 +108,7 @@ Plan:
 {PLAN_CONTENT}
 
 Project Context:
+{AGENTS_MD_CONTENT}
 {CLAUDE_MD_CONTENT}
 ```
 
