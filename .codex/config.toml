@@ -5,47 +5,46 @@
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 model_reasoning_effort = "medium"
-web_search = "auto"
+web_search = "cached"
 
 [profiles.atlas-plan]
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 model_reasoning_effort = "medium"
-web_search = "auto"
+web_search = "cached"
 
 [profiles.atlas-execute]
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 model_reasoning_effort = "high"
-web_search = "auto"
+web_search = "cached"
 
 [profiles.atlas-status]
 approval_policy = "on-request"
 sandbox_mode = "read-only"
 model_reasoning_effort = "medium"
-web_search = "auto"
+web_search = "cached"
 
 [profiles.atlas-sync]
 approval_policy = "on-request"
 sandbox_mode = "read-only"
 model_reasoning_effort = "medium"
-web_search = "auto"
+web_search = "cached"
 
 [profiles.atlas-triage]
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 model_reasoning_effort = "medium"
-web_search = "auto"
+web_search = "cached"
 
 [profiles.atlas-complete]
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 model_reasoning_effort = "medium"
-web_search = "auto"
+web_search = "cached"
 
 [profiles.atlas-review]
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 model_reasoning_effort = "medium"
-web_search = "auto"
-
+web_search = "cached"

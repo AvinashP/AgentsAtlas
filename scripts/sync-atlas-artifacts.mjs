@@ -183,7 +183,7 @@ function renderCodexConfig(commands) {
     lines.push(`approval_policy = ${quoteTomlString('on-request')}`);
     lines.push(`sandbox_mode = ${quoteTomlString(isReadOnly ? 'read-only' : 'workspace-write')}`);
     lines.push(`model_reasoning_effort = ${quoteTomlString(reasoning)}`);
-    lines.push(`web_search = ${quoteTomlString('auto')}`);
+    lines.push(`web_search = ${quoteTomlString('cached')}`);
     lines.push('');
   }
 

@@ -171,7 +171,7 @@ codex "\${CODEX_ARGS[@]}" "$PROMPT"
     codexProfileLines.push('approval_policy = "on-request"');
     codexProfileLines.push(`sandbox_mode = "${isReadOnly ? 'read-only' : 'workspace-write'}"`);
     codexProfileLines.push(`model_reasoning_effort = "${reasoning}"`);
-    codexProfileLines.push('web_search = "auto"');
+    codexProfileLines.push('web_search = "cached"');
     codexProfileLines.push('');
   }
   fs.mkdirSync(path.dirname(codexConfigPath), { recursive: true });
