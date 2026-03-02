@@ -13,3 +13,6 @@ test-project/
 # Node
 node_modules/
 package-lock.json
+
+# Atlas local state
+.atlas/
