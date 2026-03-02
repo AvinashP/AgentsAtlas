@@ -1,11 +1,11 @@
 {
-  "name": "claude-atlas",
+  "name": "agents-atlas",
   "owner": {
     "name": "AvinashP"
   },
   "plugins": [
     {
-      "name": "claude-atlas",
+      "name": "agents-atlas",
       "description": "Minimal workflow for Claude Code - 8 commands, fresh context, quality execution",
       "author": {
         "name": "AvinashP"

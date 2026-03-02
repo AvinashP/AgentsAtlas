@@ -124,7 +124,7 @@ This repo maps Atlas Claude commands to Codex skills and wrapper scripts.
 ${skillBullets}
 
 Global availability option:
-- Run \`npx claude-atlas --global --with-codex-global\` once to install Atlas skills at \`~/.codex/skills/atlas-*\`.
+- Run \`npx agents-atlas --global --with-codex-global\` once to install Atlas skills at \`~/.codex/skills/atlas-*\`.
 - Project-local skills in \`.agents/skills\` can override global skills.
 
 ## Fresh Context Scripts
@@ -222,7 +222,7 @@ function syncMetadata(commands) {
   const marketplace = readJson(marketplacePath);
   if (Array.isArray(marketplace.plugins)) {
     for (const plugin of marketplace.plugins) {
-      if (plugin.name === 'claude-atlas') {
+      if (plugin.name === 'agents-atlas') {
         plugin.description = description;
       }
     }

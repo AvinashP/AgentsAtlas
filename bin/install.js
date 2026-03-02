@@ -35,8 +35,8 @@ ${cyan}   █████╗ ████████╗██╗      ███
   ██║  ██║   ██║   ███████╗██║  ██║███████║
   ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝${reset}
 
-  Claude Atlas ${dim}v${pkg.version}${reset}
-  Minimal workflow for Claude Code
+  Agents Atlas ${dim}v${pkg.version}${reset}
+  Minimal workflow for Claude Code & Codex
   ${ATLAS_COMMANDS.length} commands. Fresh context. Quality execution.
 `;
 
@@ -51,7 +51,7 @@ console.log(banner);
 
 // Show help if requested
 if (hasHelp) {
-  console.log(`  ${yellow}Usage:${reset} npx claude-atlas [options]
+  console.log(`  ${yellow}Usage:${reset} npx agents-atlas [options]
 
   ${yellow}Options:${reset}
     ${cyan}-g, --global${reset}    Install globally (to ~/.claude)
@@ -61,13 +61,13 @@ if (hasHelp) {
 
   ${yellow}Examples:${reset}
     ${dim}# Install globally${reset}
-    npx claude-atlas --global
+    npx agents-atlas --global
 
     ${dim}# Install globally + global Codex skills${reset}
-    npx claude-atlas --global --with-codex-global
+    npx agents-atlas --global --with-codex-global
 
     ${dim}# Install to current project only${reset}
-    npx claude-atlas --local
+    npx agents-atlas --local
 `);
   process.exit(0);
 }

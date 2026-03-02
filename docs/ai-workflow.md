@@ -17,7 +17,7 @@ This repo maps Atlas Claude commands to Codex skills and wrapper scripts.
 - `atlas-review`
 
 Global availability option:
-- Run `npx claude-atlas --global --with-codex-global` once to install Atlas skills at `~/.codex/skills/atlas-*`.
+- Run `npx agents-atlas --global --with-codex-global` once to install Atlas skills at `~/.codex/skills/atlas-*`.
 - Project-local skills in `.agents/skills` can override global skills.
 
 ## Fresh Context Scripts

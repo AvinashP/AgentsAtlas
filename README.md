@@ -1,8 +1,8 @@
-# ClaudeAtlas
+# AgentsAtlas
 
-A minimal, effective workflow for building production-ready projects with Claude Code.
+A minimal, effective workflow for building production-ready projects with Claude Code & Codex.
 
-<img width="476" height="302" alt="ClaudeAtlas" src="https://github.com/user-attachments/assets/c0936781-d5f4-403b-91ce-7d1328945265" />
+<img width="476" height="302" alt="AgentsAtlas" src="https://github.com/user-attachments/assets/c0936781-d5f4-403b-91ce-7d1328945265" />
 
 
 ## Philosophy
@@ -32,13 +32,13 @@ A minimal, effective workflow for building production-ready projects with Claude
 
 ```bash
 # Install globally (available in all projects)
-npx claude-atlas --global
+npx agents-atlas --global
 
 # Or install locally (current project only)
-npx claude-atlas --local
+npx agents-atlas --local
 
 # Global commands + global Codex skills
-npx claude-atlas --global --with-codex-global
+npx agents-atlas --global --with-codex-global
 ```
 
 `--local` also installs Codex wrappers in your repo (`.agents/skills/atlas-*`, `scripts/atlas-*`, and `.codex/config.toml`).
@@ -73,8 +73,8 @@ ls ~/.codex/skills/atlas-plan/SKILL.md
 
 ```bash
 # Clone and run installer
-git clone https://github.com/AvinashP/ClaudeAtlas.git
-cd ClaudeAtlas
+git clone https://github.com/AvinashP/AgentsAtlas.git
+cd AgentsAtlas
 node bin/install.js --global
 ```
 
@@ -82,13 +82,13 @@ node bin/install.js --global
 
 ```bash
 # Clone and symlink
-git clone https://github.com/AvinashP/ClaudeAtlas.git
-ln -s $(pwd)/ClaudeAtlas/commands/atlas ~/.claude/commands/atlas
+git clone https://github.com/AvinashP/AgentsAtlas.git
+ln -s $(pwd)/AgentsAtlas/commands/atlas ~/.claude/commands/atlas
 ```
 
 ## Skills
 
-ClaudeAtlas includes **16 development skills** that provide disciplined workflows:
+AgentsAtlas includes **16 development skills** that provide disciplined workflows:
 
 | Category | Skills |
 |----------|--------|

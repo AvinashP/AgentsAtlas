@@ -5,7 +5,7 @@ allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(mkdir:*), Bash(git
 
 # Initialize Project
 
-Initialize a new project with ClaudeAtlas workflow.
+Initialize a new project with AgentsAtlas workflow.
 
 ## Process
 

@@ -1,4 +1,4 @@
-# Project: ClaudeAtlas
+# Project: AgentsAtlas
 
 ## Overview
 Simple Claude code workflow to write production ready code without context degradation
