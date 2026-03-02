@@ -1,0 +1,69 @@
+{
+  "commandPrefix": "atlas",
+  "commands": [
+    {
+      "name": "init",
+      "summary": "Initialize project workflow artifacts",
+      "skillDescription": "Initialize project with CLAUDE.md, STATE.md, and ROADMAP.md by following the canonical init command doc.",
+      "safety": "preserve existing project context; do not overwrite user-authored planning files without explicit confirmation.",
+      "prompt": "Open and follow .agents/skills/atlas-init/SKILL.md. Initialize workflow artifacts according to the canonical command.",
+      "fullAuto": false
+    },
+    {
+      "name": "plan",
+      "summary": "Create executable phase plan",
+      "skillDescription": "Create executable plan for the current phase (3-5 tasks). Reads the canonical plan command doc and produces/updates the current PLAN.md referenced from STATE.md. No implementation.",
+      "safety": "do not implement code; only produce plan artifacts.",
+      "prompt": "Open and follow .agents/skills/atlas-plan/SKILL.md. Produce only the plan artifacts.",
+      "fullAuto": false
+    },
+    {
+      "name": "execute",
+      "summary": "Execute current plan tasks",
+      "skillDescription": "Execute the current plan (from STATE.md -> PLAN.md) by following the canonical execute command doc. Make code changes + run necessary checks.",
+      "safety": "prefer smallest change-set; keep diffs tight; run tests/linters when applicable.",
+      "prompt": "Open and follow .agents/skills/atlas-execute/SKILL.md. Execute plan tasks.",
+      "fullAuto": true
+    },
+    {
+      "name": "status",
+      "summary": "Check project progress",
+      "skillDescription": "Check project progress and suggest the next action by following the canonical status command doc.",
+      "safety": "read and report state only; do not modify files.",
+      "prompt": "Open and follow .agents/skills/atlas-status/SKILL.md. Report current project workflow status.",
+      "fullAuto": false
+    },
+    {
+      "name": "sync",
+      "summary": "Restore context after /clear",
+      "skillDescription": "Restore project context after clear/new session by following the canonical sync command doc.",
+      "safety": "refresh context from canonical planning files and report concise status.",
+      "prompt": "Open and follow .agents/skills/atlas-sync/SKILL.md. Refresh context and summarize where to resume.",
+      "fullAuto": false
+    },
+    {
+      "name": "triage",
+      "summary": "Pull and triage external issues",
+      "skillDescription": "Pull and triage issues from external sources for planning by following the canonical triage command doc.",
+      "safety": "keep source data traceable and avoid changing scope without explicit confirmation.",
+      "prompt": "Open and follow .agents/skills/atlas-triage/SKILL.md. Pull issues and triage according to the canonical workflow.",
+      "fullAuto": false
+    },
+    {
+      "name": "complete",
+      "summary": "Complete current milestone",
+      "skillDescription": "Complete the current milestone and prepare next work by following the canonical complete command doc.",
+      "safety": "verify all phases are complete before closing milestone artifacts.",
+      "prompt": "Open and follow .agents/skills/atlas-complete/SKILL.md. Complete milestone workflow and update artifacts.",
+      "fullAuto": false
+    },
+    {
+      "name": "review",
+      "summary": "Review code changes",
+      "skillDescription": "Review code changes and capture learnings for CLAUDE.md by following the canonical review command doc.",
+      "safety": "prioritize correctness and concrete evidence; avoid speculative findings.",
+      "prompt": "Open and follow .agents/skills/atlas-review/SKILL.md. Perform review workflow and capture findings.",
+      "fullAuto": false
+    }
+  ]
+}

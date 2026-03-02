@@ -1,0 +1,34 @@
+{
+  "name": "agents-atlas",
+  "version": "1.6.0",
+  "description": "Minimal workflow for Claude Code - 8 commands, fresh context, quality execution",
+  "scripts": {
+    "sync:atlas": "node scripts/sync-atlas-artifacts.mjs",
+    "check:atlas": "node --check bin/install.js && node --check scripts/sync-atlas-artifacts.mjs"
+  },
+  "bin": {
+    "agents-atlas": "bin/install.js"
+  },
+  "files": [
+    "bin",
+    "commands",
+    "templates",
+    "skills"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "workflow",
+    "ai",
+    "productivity"
+  ],
+  "author": "AvinashP",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AvinashP/AgentsAtlas.git"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
