@@ -90,6 +90,17 @@ ln -s $(pwd)/AgentsAtlas/commands/atlas ~/.claude/commands/atlas
 | `/atlas:triage` | Pull and triage issues from Sentry, GitHub, etc. |
 | `/atlas:complete` | Complete milestone, archive, and prepare for next work |
 
+### Non-Interactive Mode
+
+Add `--auto` when running without user interaction (CI, scripts, `--dangerously-skip-permissions`):
+
+```bash
+/atlas:init --auto    # Detects project from config files, uses [TODO] for unknowns
+/atlas:plan --auto    # Picks best approach automatically, no prompts
+```
+
+Without `--auto`, these commands ask interactive questions that get phantom answers in non-interactive mode.
+
 ## Using with Codex
 
 Atlas appears in Codex as **skills**, not `/atlas:*` slash commands.
