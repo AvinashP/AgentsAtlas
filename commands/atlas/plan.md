@@ -11,6 +11,10 @@ Create an executable plan for the current phase.
 - CLAUDE.md exists
 - .planning/STATE.md exists
 
+## Usage
+- `/atlas:plan` - Interactive planning (may ask clarifying questions)
+- `/atlas:plan --auto` - Non-interactive planning (zero AskUserQuestion calls)
+
 ## Process
 
 1. **Load context**:
@@ -27,7 +31,29 @@ Create an executable plan for the current phase.
 
 3. **Identify current phase** from STATE.md
 
-4. **Explore approaches** (per /brainstorming skill, if phase goal is unclear):
+4. **Detect mode**:
+   - Check if the user's message includes `--auto`
+   - If `--auto`: follow **step 5a (Non-Interactive Path)**
+   - Otherwise: follow **step 5b (Interactive Path)**
+
+5a. **Non-Interactive Path** (`--auto`):
+   - Skip ALL AskUserQuestion calls.
+   - If phase goal is vague or multiple valid approaches exist:
+     - Identify 2-3 approaches with trade-offs internally.
+     - Choose one deterministically using this priority order:
+       1. Best alignment with Current Scope/Core Value
+       2. Smallest change surface and lowest dependency risk
+       3. Highest testability and easiest verification
+       4. Best consistency with existing codebase patterns
+   - Record the selection in STATE.md "Recent Decisions" as:
+     - `[AUTO] Chosen approach for {phase}: {approach} - {reason}`
+   - If requirements remain unclear:
+     - Do NOT invent subjective user preferences.
+     - Use explicit `[AUTO ASSUMPTION] ...` notes in PLAN.md task action text.
+     - If ambiguity is high, make task 1 a scoped discovery/validation task before implementation tasks.
+
+5b. **Interactive Path** (current behavior):
+   **Explore approaches** (per /brainstorming skill, if phase goal is unclear):
    - If ROADMAP.md phase description is vague or has multiple valid approaches:
      a. Identify 2-3 possible approaches with trade-offs
      b. Use AskUserQuestion with options: "Which approach for {phase}?"
@@ -35,7 +61,7 @@ Create an executable plan for the current phase.
    - Example: Phase "API layer" could be REST vs GraphQL vs gRPC
    - Skip if the phase goal is obvious and has only one reasonable approach
 
-5. **Ask clarifying questions** using AskUserQuestion tool (if needed):
+   **Ask clarifying questions** using AskUserQuestion tool (if needed):
    - Only ask if specific requirements are unclear after approach is chosen
    - Use AskUserQuestion with options when possible
    - Skip entirely if the phase is obvious from roadmap context
@@ -88,3 +114,6 @@ Next: Run /atlas:execute to implement this plan.
 - Tasks should be 15-45 min of implementation each.
 - Be specific in actions. "Implement auth" is too vague. "Create login endpoint with JWT token generation" is right.
 - Every task needs both `verify` (how to test) and `done` (acceptance criteria).
+- `--auto` mode must make zero AskUserQuestion calls.
+- In `--auto`, never fabricate subjective preferences; use explicit `[AUTO ASSUMPTION]` markers when needed.
+- In `--auto`, record auto-selected approach decisions in STATE.md with `[AUTO]` prefix.
