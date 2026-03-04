@@ -1,6 +1,6 @@
 ---
 description: Initialize project with CLAUDE.md, STATE.md, and ROADMAP.md
-allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(mkdir:*), Bash(git init:*), Bash(git status:*), Bash(ls:*), Bash(cp:*)
+allowed-tools: Read, Write, Edit, Glob, AskUserQuestion, Bash(mkdir:*), Bash(git init:*), Bash(git status:*), Bash(git rev-parse:*), Bash(ls:*), Bash(cp:*)
 ---
 
 # Initialize Project
@@ -9,14 +9,68 @@ Initialize a new project with AgentsAtlas workflow.
 
 ## Process
 
-1. **Check existing setup**:
-   - If `.git` doesn't exist, offer to run `git init`
-   - If CLAUDE.md exists, just append STATE.md reference (don't replace)
-   - If .planning/ exists, confirm before overwriting
+1. **Detect mode**:
+   - Check if the user's message includes `--auto`
+   - If `--auto`: follow the **Non-Interactive Path** (step 3a)
+   - Otherwise: follow the **Interactive Path** (step 3b, current behavior)
 
-2. **Create .planning directory** if it doesn't exist
+2. **Check existing setup** (mode-aware):
+   - If `--auto`: do NOT prompt. Apply deterministic safety behavior in step 3a.
+   - Otherwise (interactive path):
+     - If `.git` doesn't exist, offer to run `git init`
+     - If CLAUDE.md exists, just append STATE.md reference (don't replace)
+     - If .planning/ exists, confirm before overwriting
 
-3. **Scope Discovery** (per /brainstorming skill, use adaptive questioning):
+3a. **Non-Interactive Path** (when `--auto` is specified):
+
+   Skip ALL AskUserQuestion calls — including safety gates. Instead:
+
+   a. **Safety gates (deterministic, no prompts)**:
+      - Git safety check:
+        1. Run `git rev-parse --is-inside-work-tree`
+        2. If `true`: already inside a repo; **do not** run `git init`
+        3. If `false` and local `.git` doesn't exist: run `git init`
+      - `CLAUDE.md` exists → append STATE.md reference (don't replace), same as interactive
+      - `.planning/` exists → **skip overwrite, leave existing files intact**.
+        Only create files that don't already exist. Log which files were skipped.
+      - `.planning/` missing → create it before generating STATE.md/ROADMAP.md.
+      - Precedence rule (for all generated artifacts): if target file exists, skip and do not modify.
+        Exception: for existing `CLAUDE.md`, only append STATE.md link if missing.
+
+   b. **Scan codebase** for objective facts:
+      - Config files: package.json, pyproject.toml, Cargo.toml, go.mod, pom.xml
+      - Parse for: project name, description, language, framework, dependencies
+      - Scan structure: key directories, entry points, test framework
+      - Classify: greenfield (no source files) vs brownfield (existing code)
+
+   c. **Generate CLAUDE.md** (if missing):
+      - Project name: from config file `name` field, or directory name
+      - Description: from config file `description` field, or `[TODO: Add project description]`
+      - Tech stack: from detected language/framework/dependencies
+      - Codebase section: from directory scan (for brownfield)
+      - Any field that cannot be detected: use `[TODO: ...]` with specific prompt
+
+   d. **Generate STATE.md** (if missing):
+      - Add warning at top: `> ⚠️ Auto-generated from codebase analysis. Review and update fields marked [TODO].`
+      - What: config file description, or `[TODO: Describe what you're building]`
+      - Core Value: `[TODO: What is the ONE thing that matters most?]`
+      - In Scope: `[TODO: Define active requirements]` (do NOT infer intent from code structure)
+      - Out of Scope: `[TODO: What's explicitly not in v1?]`
+      - Constraints: list detected tech stack as constraints; add `[TODO: Add timeline, integration, or other constraints]`
+      - Phase/Status/Next Action: same as interactive path
+
+   e. **Generate ROADMAP.md** (if missing):
+      - For brownfield: derive phases from existing structure if clear, otherwise single `[TODO: Define phases]`
+      - For greenfield: `[TODO: Define project phases after running /atlas:plan]`
+
+   f. **Verify hook**: skip entirely. Do not create `.atlas/verify.md`.
+
+   g. Skip to step 9a (**Auto Output**).
+
+3b. **Interactive Path** (default — current behavior):
+   Create `.planning` directory if it doesn't exist, then continue with Scope Discovery below.
+
+4. **Scope Discovery** (per /brainstorming skill, use adaptive questioning):
    Use the brainstorming approach: one question at a time, explore collaboratively.
    Max 4-5 questions total.
 
@@ -55,17 +109,17 @@ Initialize a new project with AgentsAtlas workflow.
    - Skip questions if answers are obvious from context
    - For brownfield projects, pre-fill detected info and confirm
 
-4. **Confirm scope** (decision gate):
+5. **Confirm scope** (decision gate):
    Summarize what you understood and use AskUserQuestion to confirm:
    - "Here's what I captured: [summary]. Ready to proceed?"
    - Options: "Yes, let's go", "Let me clarify something"
    - If they want to clarify, ask one follow-up then proceed
 
-5. **Create or update CLAUDE.md**:
+6. **Create or update CLAUDE.md**:
    - If CLAUDE.md exists: just add "## Current State" section with link to STATE.md
    - If new: create using template, keep under 30 lines
 
-6. **Create .planning/STATE.md**:
+7. **Create .planning/STATE.md**:
    Populate the Current Scope section using responses from scope discovery:
    - **What**: User's description in their own words (2-3 sentences)
    - **Core Value**: The ONE thing they said matters most
@@ -78,11 +132,11 @@ Initialize a new project with AgentsAtlas workflow.
    - Status: not-started
    - Next Action: "Run /atlas:plan to plan Phase 1"
 
-7. **Create .planning/ROADMAP.md**:
+8. **Create .planning/ROADMAP.md**:
    - List phases as checkboxes
    - Keep descriptions to 3-5 words each
 
-8. **Offer verify hook** (optional):
+9. **Offer verify hook** (optional):
    Detect project type and offer to create `.atlas/verify.md`:
    - Unity project (Assets/ folder) → `~/.claude/atlas-templates/verify/unity.md`
    - Node project (package.json) → `~/.claude/atlas-templates/verify/fullstack.md`
@@ -96,7 +150,25 @@ Initialize a new project with AgentsAtlas workflow.
 
    If yes, copy the appropriate template to `.atlas/verify.md` in the project.
 
-9. **Output**:
+9a. **Auto Output** (for `--auto` path):
+```
+Project initialized (auto mode).
+
+Files created:
+- CLAUDE.md (if missing)
+- .planning/STATE.md (if missing)
+- .planning/ROADMAP.md (if missing)
+
+Files skipped (already existed):
+- [list each skipped file path]
+
+Notes:
+- `.atlas/verify.md` not created in `--auto` mode
+- Run `/atlas:init` without `--auto` for interactive scope capture
+- Run `/atlas:plan` to create your first execution plan
+```
+
+10. **Output** (for interactive path):
 ```
 Project initialized.
 
@@ -136,3 +208,8 @@ One paragraph. Not 7 documents.
 ## Rules
 - Don't over-ask. 4-5 questions max.
 - Don't create unnecessary files.
+- `--auto` flag: zero AskUserQuestion calls, visible [TODO] for all subjective fields
+- Never infer subjective intent (Core Value, Out of Scope) from code structure
+- [TODO: ...] markers must be visible text, not HTML comments
+- `--auto` safety: never overwrite existing .planning/ files, skip verify hook creation
+- `git init` safety: never initialize when already inside a parent Git worktree
