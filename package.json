@@ -1,6 +1,6 @@
 {
   "name": "agents-atlas",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Minimal workflow for Claude Code - 8 commands, fresh context, quality execution",
   "scripts": {
     "sync:atlas": "node scripts/sync-atlas-artifacts.mjs",
