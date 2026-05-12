@@ -1,12 +1,22 @@
 {
   "name": "agents-atlas",
-  "version": "1.6.0",
-  "description": "Minimal workflow for Claude Code - 8 commands, fresh context, quality execution",
+  "version": "1.7.0",
+  "description": "Minimal workflow for Claude Code & Codex - 8 commands, 16 dev skills, fresh-context subagent execution",
   "author": {
     "name": "AvinashP"
   },
+  "homepage": "https://github.com/AvinashP/AgentsAtlas",
   "license": "MIT",
   "repository": "https://github.com/AvinashP/AgentsAtlas",
+  "keywords": [
+    "workflow",
+    "subagents",
+    "fresh-context",
+    "planning",
+    "skills",
+    "codex",
+    "slash-commands"
+  ],
   "commands": [
     "./commands/atlas/init.md",
     "./commands/atlas/plan.md",

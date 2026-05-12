@@ -31,6 +31,25 @@ function quoteTomlString(value) {
   return JSON.stringify(value);
 }
 
+function countSkills() {
+  const skillsDir = path.join(repoRoot, 'skills');
+  if (!fs.existsSync(skillsDir)) {
+    return 0;
+  }
+  return fs
+    .readdirSync(skillsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .length;
+}
+
+function buildDescription(commandCount) {
+  const skillCount = countSkills();
+  return `Minimal workflow for Claude Code & Codex - ${commandCount} commands, ${skillCount} dev skills, fresh-context subagent execution`;
+}
+
+const HOMEPAGE = 'https://github.com/AvinashP/AgentsAtlas';
+const PLUGIN_KEYWORDS = ['workflow', 'subagents', 'fresh-context', 'planning', 'skills', 'codex', 'slash-commands'];
+
 function renderSkill(command, commandDocPath) {
   return `---
 name: atlas-${command.name}
@@ -206,14 +225,24 @@ function syncScripts(commands) {
 }
 
 function syncPlugin(commands) {
-  const plugin = readJson(pluginPath);
-  plugin.commands = commands.map((command) => `./commands/atlas/${command.name}.md`);
-  plugin.description = `Minimal workflow for Claude Code - ${commands.length} commands, fresh context, quality execution`;
+  const pkg = readJson(packageJsonPath);
+  const existing = readJson(pluginPath);
+  const plugin = {
+    name: existing.name,
+    version: pkg.version,
+    description: buildDescription(commands.length),
+    author: existing.author,
+    homepage: HOMEPAGE,
+    license: existing.license || pkg.license,
+    repository: existing.repository || HOMEPAGE,
+    keywords: PLUGIN_KEYWORDS,
+    commands: commands.map((command) => `./commands/atlas/${command.name}.md`),
+  };
   writeFile(pluginPath, `${JSON.stringify(plugin, null, 2)}\n`);
 }
 
 function syncMetadata(commands) {
-  const description = `Minimal workflow for Claude Code - ${commands.length} commands, fresh context, quality execution`;
+  const description = buildDescription(commands.length);
 
   const pkg = readJson(packageJsonPath);
   pkg.description = description;
@@ -224,6 +253,7 @@ function syncMetadata(commands) {
     for (const plugin of marketplace.plugins) {
       if (plugin.name === 'agents-atlas') {
         plugin.description = description;
+        plugin.version = pkg.version;
       }
     }
   }

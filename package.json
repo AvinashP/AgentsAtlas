@@ -1,7 +1,7 @@
 {
   "name": "agents-atlas",
   "version": "1.7.0",
-  "description": "Minimal workflow for Claude Code - 8 commands, fresh context, quality execution",
+  "description": "Minimal workflow for Claude Code & Codex - 8 commands, 16 dev skills, fresh-context subagent execution",
   "scripts": {
     "sync:atlas": "node scripts/sync-atlas-artifacts.mjs",
     "check:atlas": "node --check bin/install.js && node --check scripts/sync-atlas-artifacts.mjs"
@@ -18,15 +18,25 @@
   "keywords": [
     "claude",
     "claude-code",
+    "claude-code-plugin",
+    "claude-skills",
+    "agent-skills",
+    "codex",
+    "slash-commands",
+    "subagents",
     "workflow",
     "ai",
     "productivity"
   ],
   "author": "AvinashP",
   "license": "MIT",
+  "homepage": "https://github.com/AvinashP/AgentsAtlas#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AvinashP/AgentsAtlas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AvinashP/AgentsAtlas/issues"
   },
   "engines": {
     "node": ">=16.0.0"
